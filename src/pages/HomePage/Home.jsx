@@ -22,12 +22,18 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="Home">
-      <InteractiveText name={name} isTalking={isTalking} />{" "}
-      {/* Pasar isTalking a InteractiveText */}
-      <ButtonWithIcon isTalking={isTalking} setIsTalking={setIsTalking} />{" "}
-      {/* Pasar isTalking y setIsTalking a ButtonWithIcon */}
-      <Button text="MI CUENTA" color="" url="" />
+    <div className="home-container">
+      <InteractiveText name={name} isTalking={isTalking} />
+      <ButtonWithIcon isTalking={isTalking} setIsTalking={setIsTalking} />
+      <div className="button-container">
+        <Button
+          text="MI CUENTA"
+          backgroundColor="var(--white)"
+          textColor="var(--black)"
+          borderColor="#ffffff"
+          url="#"
+        />
+      </div>
       <div>
         <Footer />
       </div>

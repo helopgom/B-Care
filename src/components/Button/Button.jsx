@@ -1,11 +1,15 @@
 import React from "react";
 import "./Button.css";
 
-const Button = ({ text, color, url }) => {
+const Button = ({ text, backgroundColor, textColor, borderColor, url }) => {
   return (
     <button
       className="custom-button"
-      style={{ backgroundColor: color }}
+      style={{
+        backgroundColor: backgroundColor,
+        color: textColor,
+        borderColor: borderColor || "transparent",
+      }}
       onClick={() => (window.location.href = url)}
     >
       {text}

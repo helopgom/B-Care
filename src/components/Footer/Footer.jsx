@@ -1,12 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./footer.css";
 import Button from "../Button/Button";
 
 const Footer = () => {
   return (
-    <div>
-      <hr id="separator"></hr>
-      <Button id="emergency" text="EMERGENCIA" color="#D54E5D" />
+    <div className="footer-container">
+      <hr id="separator" />
+      <div id="emergency">
+        <Button
+          text="EMERGENCIA"
+          backgroundColor="var(--lightRed)"
+          textColor="var(--white)"
+          borderColor="var(--red)"
+          url="#"
+        />
+      </div>
     </div>
   );
 };
