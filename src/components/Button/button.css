@@ -1,12 +1,5 @@
 .custom-button {
-  font-family: Arial, sans-serif;
-  font-size: 32px;
-  padding: 10px 20px;
   border: 2px solid transparent;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease,
-    border-color 0.3s ease;
   margin-top: 1em;
   margin-bottom: 1em;
 }
