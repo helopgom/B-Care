@@ -13,8 +13,8 @@
 
 .icon-container {
   position: relative;
-  width: 100px;
-  height: 100px;
+  width: 20em;
+  height: 20em;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -22,7 +22,7 @@
 }
 
 .not-talking {
-  background-color: black; /* Fondo negro cuando no se está hablando */
+  background-color: var(--black);
 }
 
 .talking {
@@ -31,8 +31,8 @@
 
 /* SVG Blanco en estado "not-talking", Negro en estado "talking" */
 .icon-image {
-  width: 60px;
-  height: 60px;
+  width: 10em;
+  height: 10em;
   display: block;
   border-radius: 50%;
   position: relative;
@@ -53,23 +53,23 @@
 }
 
 .circle1 {
-  width: 120px;
-  height: 120px;
+  width: 160px;
+  height: 160px;
   background-color: #d9d9d9;
   opacity: 1;
 }
 
 .circle2 {
-  width: 140px;
-  height: 140px;
+  width: 200px;
+  height: 200px;
   background-color: #d9d9d9;
   opacity: 0.51;
   animation-delay: 0.5s;
 }
 
 .circle3 {
-  width: 160px;
-  height: 160px;
+  width: 220px;
+  height: 220px;
   background-color: #f8f8f8;
   opacity: 1;
   animation-delay: 1s;
