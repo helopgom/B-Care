@@ -44,11 +44,10 @@
   filter: invert(0%);
 }
 
-/* Estilos de los círculos */
 .circle {
   position: absolute;
   border-radius: 50%;
-  z-index: 5; /* Los círculos estarán debajo del SVG */
+  z-index: 5;
   animation: pulse 1.5s infinite ease-in-out;
 }
 

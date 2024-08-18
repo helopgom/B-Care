@@ -3,7 +3,7 @@ import "./buttonWithIcon.css";
 
 const ButtonWithIcon = ({ isTalking, setIsTalking }) => {
   const handleClick = () => {
-    setIsTalking(!isTalking); // Cambia el estado isTalking en el componente padre
+    setIsTalking(!isTalking);
   };
 
   return (

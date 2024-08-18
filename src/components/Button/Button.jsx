@@ -6,14 +6,14 @@ const Button = ({
   backgroundColor,
   textColor,
   borderColor,
-  url,
+  link,
   onClick,
 }) => {
   return (
     <button
       className="custom-button"
       style={{ backgroundColor, color: textColor, borderColor }}
-      onClick={onClick ? onClick : () => (window.location.href = url)}
+      onClick={onClick ? onClick : () => (window.location.href = link)}
     >
       {text}
     </button>

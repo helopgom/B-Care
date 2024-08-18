@@ -19,14 +19,14 @@ const Home = () => {
   }, []);
 
   const handleFinish = () => {
-    setIsTalking(false); // Finaliza el estado de "Hablando"
+    setIsTalking(false);
   };
 
   return (
     <div className="home-container">
       <InteractiveText name={name} isTalking={isTalking} />
       <ButtonWithIcon isTalking={isTalking} setIsTalking={setIsTalking} />
-      {/* Renderizar condicionalmente el botón "MI CUENTA" */}
+
       {!isTalking && (
         <div className="button-container">
           <Button
@@ -34,19 +34,19 @@ const Home = () => {
             backgroundColor="var(--white)"
             textColor="var(--black)"
             borderColor="var(--black)"
-            url="#"
+            link="/MyAccount"
           />
         </div>
       )}
-      {/* Renderizar condicionalmente el botón "Finalizar" */}
+
       {isTalking && (
         <div className="finish-button-container">
           <Button
             text="FINALIZAR"
-            backgroundColor="var(--black)" // Ajusta el color según sea necesario
+            backgroundColor="var(--black)"
             textColor="var(--white)"
             borderColor="var(--black)"
-            url="#"
+            link="#"
             onClick={handleFinish}
           />
         </div>
