@@ -10,11 +10,8 @@ const Home = () => {
   const [isTalking, setIsTalking] = useState(false); // Estado movido a Home
 
   useEffect(() => {
-    // Aquí hacer llamada al CRUD para tener el nombre dinámico.
-    // Mientras se simula que se obtiene el nombre "Juan" de la base de datos.
     const fetchName = async () => {
-      // Simulando una llamada a la base de datos
-      const fetchedName = "Juan"; // Esto lo obtendrás de tu CRUD
+      const fetchedName = "Juan"; // Simulación de obtención de nombre
       setName(fetchedName);
     };
 
@@ -25,15 +22,18 @@ const Home = () => {
     <div className="home-container">
       <InteractiveText name={name} isTalking={isTalking} />
       <ButtonWithIcon isTalking={isTalking} setIsTalking={setIsTalking} />
-      <div className="button-container">
-        <Button
-          text="MI CUENTA"
-          backgroundColor="var(--white)"
-          textColor="var(--black)"
-          borderColor="#ffffff"
-          url="#"
-        />
-      </div>
+      {/* Renderizar condicionalmente el botón */}
+      {!isTalking && (
+        <div className="button-container">
+          <Button
+            text="MI CUENTA"
+            backgroundColor="var(--white)"
+            textColor="var(--black)"
+            borderColor="var(--black)"
+            url="#"
+          />
+        </div>
+      )}
       <div>
         <Footer />
       </div>

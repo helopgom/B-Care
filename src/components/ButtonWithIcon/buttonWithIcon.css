@@ -27,22 +27,21 @@
 }
 
 .talking {
-  background-color: transparent; /* Fondo transparente cuando está hablando */
+  background-color: transparent;
 }
 
-/* SVG Blanco en estado "not-talking", Negro en estado "talking" */
 .icon-image {
   width: 10em;
   height: 10em;
   display: block;
   border-radius: 50%;
   position: relative;
-  z-index: 10; /* Asegura que el icono SVG esté por encima de los círculos */
-  filter: invert(100%); /* Convierte el SVG a blanco */
+  z-index: 10;
+  filter: invert(100%);
 }
 
 .talking .icon-image {
-  filter: invert(0%); /* Convierte el SVG a negro */
+  filter: invert(0%);
 }
 
 /* Estilos de los círculos */
