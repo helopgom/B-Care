@@ -7,6 +7,7 @@ import ButtonWithIcon from "../../components/ButtonWithIcon/ButtonWithIcon";
 
 const Home = () => {
   const [name, setName] = useState("");
+  const [isTalking, setIsTalking] = useState(false); // Estado movido a Home
 
   useEffect(() => {
     // Aquí hacer llamada al CRUD para tener el nombre dinámico.
@@ -22,8 +23,10 @@ const Home = () => {
 
   return (
     <div className="Home">
-      <InteractiveText name={name} />
-      <ButtonWithIcon />
+      <InteractiveText name={name} isTalking={isTalking} />{" "}
+      {/* Pasar isTalking a InteractiveText */}
+      <ButtonWithIcon isTalking={isTalking} setIsTalking={setIsTalking} />{" "}
+      {/* Pasar isTalking y setIsTalking a ButtonWithIcon */}
       <Button text="MI CUENTA" color="" url="" />
       <div>
         <Footer />

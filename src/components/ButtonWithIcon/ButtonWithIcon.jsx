@@ -1,24 +1,19 @@
-import React, { useState } from "react";
-import InteractiveText from "../InteractiveText/InteractiveText";
+import React from "react";
 import "./buttonWithIcon.css";
 
-const ButtonWithIcon = ({ name }) => {
-  const [isTalking, setIsTalking] = useState(false);
-
+const ButtonWithIcon = ({ isTalking, setIsTalking }) => {
   const handleClick = () => {
-    setIsTalking(!isTalking);
+    setIsTalking(!isTalking); // Cambia el estado cuando se hace click
   };
 
   return (
     <div className="button-with-icon-container">
       <button onClick={handleClick} className="icon-button">
-        <div className={`icon-container ${isTalking ? "talking" : ""}`}>
+        <div
+          className={`icon-container ${isTalking ? "talking" : "not-talking"}`}
+        >
           <img
-            src={
-              isTalking
-                ? "public/assets/microphone.svg"
-                : "public/assets/microphone.svg"
-            }
+            src="public/assets/microphoneIcon.svg"
             alt="icon"
             className="icon-image"
           />
