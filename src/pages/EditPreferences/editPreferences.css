@@ -1,0 +1,46 @@
+.edit-preferences-container {
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.selected-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.topic-item {
+  background-color: var(--light-gray);
+  padding: 5px 10px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.remove-topic-button {
+  background-color: transparent;
+  border: none;
+  color: var(--red);
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.add-topic-button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: var(--blue);
+  color: var(--white);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button-group {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}

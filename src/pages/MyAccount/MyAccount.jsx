@@ -1,22 +1,24 @@
 import React, { useState, useEffect } from "react";
 import "./myAccount.css";
-import Card from "../../components/Card/Card"; // Asegúrate de tener un componente Card
-import Button from "../../components/Button/Button"; // El componente Button para el botón de volver
+import Card from "../../components/Card/Card";
+import Button from "../../components/Button/Button";
+import { useNavigate } from "react-router-dom";
+import Footer from "../../components/Footer/Footer";
 
 const MyAccount = () => {
   const [userData, setUserData] = useState({});
   const [preferences, setPreferences] = useState({});
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Simulación de llamadas a la API
-        const userResponse = await fetch("/api/user"); // Reemplaza con tu URL de API
+        const userResponse = await fetch("/api/user");
         const userData = await userResponse.json();
         setUserData(userData);
 
-        const prefsResponse = await fetch("/api/preferences"); // Reemplaza con tu URL de API
+        const prefsResponse = await fetch("/api/preferences");
         const preferences = await prefsResponse.json();
         setPreferences(preferences);
       } catch (error) {
@@ -30,26 +32,43 @@ const MyAccount = () => {
   }, []);
 
   const handleBack = () => {
-    window.history.back(); // Volver a la página anterior en el historial
+    window.history.back();
   };
 
   if (loading) {
-    return <p>Loading...</p>; // Mostrar un mensaje de carga mientras se obtienen los datos
+    return <p>Loading...</p>;
   }
+
+  const handleEditPersonalData = () => {
+    navigate("/editPersonalData");
+  };
+
+  const handleEditPreferences = () => {
+    navigate("/editPreferences");
+  };
 
   return (
     <div className="my-account-container">
       <div className="card-container">
-        <Card title="Mis Datos" content={userData} />
-        <Card title="Preferencias" content={preferences} />
+        <Card
+          title="Mis Datos"
+          content={userData}
+          onIconClick={handleEditPersonalData}
+        />
+        <Card
+          title="Preferencias"
+          content={preferences}
+          onIconClick={handleEditPreferences}
+        />
       </div>
       <Button
         text="Volver"
-        backgroundColor="var(--blue)" // Ajusta el color según sea necesario
+        backgroundColor="var(--blue)"
         textColor="var(--white)"
         borderColor="var(--blue)"
         onClick={handleBack}
       />
+      <Footer />
     </div>
   );
 };

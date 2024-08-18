@@ -3,6 +3,10 @@ import "./footer.css";
 import Button from "../Button/Button";
 
 const Footer = () => {
+  const handleEmergencyClick = () => {
+    window.location.href = "tel:112";
+  };
+
   return (
     <div className="footer-container">
       <hr id="separator" />
@@ -12,7 +16,7 @@ const Footer = () => {
           backgroundColor="var(--lightRed)"
           textColor="var(--white)"
           borderColor="var(--red)"
-          url="#"
+          onClick={handleEmergencyClick}
         />
       </div>
     </div>

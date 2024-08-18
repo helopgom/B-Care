@@ -1,24 +1,18 @@
 import React from "react";
 import "./Card.css";
 
-const Card = ({ title, content, iconUrl }) => {
+const Card = ({ title, content, onIconClick }) => {
   return (
     <div className="card">
-      <h3 className="card-title">{title}</h3>
+      <h3>{title}</h3>
       <div className="card-content">
         {Object.values(content).map((value, index) => (
-          <p key={index} className="card-item">
-            {value}
-          </p>
+          <p key={index}>{value}</p>
         ))}
       </div>
-      <a href={iconUrl} className="card-icon-link">
-        <img
-          src="public/assets/edit.svg"
-          alt="Edit Icon"
-          className="card-icon"
-        />
-      </a>
+      <button className="edit-icon-button" onClick={onIconClick}>
+        <img src="public/assets/edit.svg" alt="Editar" className="edit-icon" />
+      </button>
     </div>
   );
 };
