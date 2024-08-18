@@ -1,0 +1,8 @@
+#separator {
+  color: var(--lilac);
+  border: 0.1em solid;
+  width: 100%;
+}
+#emergency {
+  align-items: center;
+}
