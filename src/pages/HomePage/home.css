@@ -3,6 +3,10 @@
   flex-direction: column;
   min-height: 100vh;
 }
+.text-container {
+  padding: 1em;
+  padding-top: 0.1em;
+}
 
 .button-container {
   display: flex;
