@@ -1,8 +1,10 @@
 .edit-preferences-container {
   background-color: var(--lightWhite);
-  padding: 20px;
+  padding: 1em;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 1em;
+  margin-top: 3em;
 }
 
 .form-group {
@@ -63,4 +65,7 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 1000;
+}
+.footer {
+  margin-top: 10%;
 }

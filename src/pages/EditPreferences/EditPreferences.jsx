@@ -100,7 +100,9 @@ const EditPreferences = () => {
         </div>
       )}
 
-      <Footer />
+      <div className="footer">
+        <Footer />
+      </div>
     </div>
   );
 };

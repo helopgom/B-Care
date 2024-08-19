@@ -1,3 +1,7 @@
+.footer-container {
+  position: absolute;
+  width: 100%;
+}
 #separator {
   color: var(--lilac);
   border: 0.1em solid;

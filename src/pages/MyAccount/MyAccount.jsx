@@ -61,14 +61,18 @@ const MyAccount = () => {
           onIconClick={handleEditPreferences}
         />
       </div>
-      <Button
-        text="VOLVER"
-        backgroundColor="var(--white)"
-        textColor="var(--black)"
-        borderColor="var(--black)"
-        onClick={handleBack}
-      />
-      <Footer />
+      <div className="back-button">
+        <Button
+          text="VOLVER"
+          backgroundColor="var(--white)"
+          textColor="var(--black)"
+          borderColor="var(--black)"
+          onClick={handleBack}
+        />
+      </div>
+      <div className="footer">
+        <Footer />
+      </div>
     </div>
   );
 };

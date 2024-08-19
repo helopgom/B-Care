@@ -1,6 +1,5 @@
 .edit-personal-data-page {
-  padding: 20px;
-  min-height: 100vh;
+  padding: 2em;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -8,13 +7,9 @@
 
 .edit-personal-data-container {
   background-color: var(--lightWhite);
-  padding: 20px;
+  padding: 1em;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
-  margin-bottom: 1.5em;
 }
 
 .edit-form {
@@ -22,13 +17,8 @@ h2 {
   flex-direction: column;
 }
 
-.form-group {
-  margin-bottom: 1.5em;
-}
-
 .form-group label {
   display: block;
-  margin-bottom: 0.5em;
 }
 
 .form-group input {
@@ -42,7 +32,6 @@ h2 {
 .button-group {
   display: flex;
   justify-content: space-between;
-  margin-top: 2em;
 }
 
 .popup {
@@ -56,4 +45,10 @@ h2 {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 1000;
+}
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 200px;
 }

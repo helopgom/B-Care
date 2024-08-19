@@ -83,8 +83,9 @@ const EditPersonalData = () => {
           <p>¡Datos guardados con éxito!</p>
         </div>
       )}
-
-      <Footer />
+      <div className="footer">
+        <Footer />
+      </div>
     </div>
   );
 };
