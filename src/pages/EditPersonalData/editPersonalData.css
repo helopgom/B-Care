@@ -1,11 +1,19 @@
+.edit-personal-data-page {
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .edit-personal-data-container {
-  padding: 2em;
-  max-width: 600px;
-  margin: 0 auto;
+  background-color: var(--lightWhite);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
-  text-align: center;
   margin-bottom: 1.5em;
 }
 
@@ -35,4 +43,17 @@ h2 {
   display: flex;
   justify-content: space-between;
   margin-top: 2em;
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #4caf50;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
 }
