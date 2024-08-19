@@ -1,0 +1,71 @@
+.edit-preferences-container {
+  background-color: var(--lightWhite);
+  padding: 1em;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 1em;
+  margin-top: 3em;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group input {
+  width: 90%;
+  padding: 10px;
+  margin-top: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.selected-topics {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 95%;
+  background-color: var(--white);
+}
+
+.topic-item {
+  background-color: var(--light-gray);
+  padding: 5px 10px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.remove-topic-button {
+  background-color: transparent;
+  border: none;
+  color: var(--red);
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.save-button,
+.cancel-button {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+  max-width: 100%;
+}
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #4caf50;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+.footer {
+  margin-top: 10%;
+}
