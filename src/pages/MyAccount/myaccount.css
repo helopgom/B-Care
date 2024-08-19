@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2em;
 }
 
 .card-container {
@@ -10,5 +9,6 @@
   flex-direction: column;
   gap: 1em;
   width: 100%;
-  max-width: 800px;
+  margin-top: 1em;
+  margin-left: 3em;
 }

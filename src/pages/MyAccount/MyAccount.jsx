@@ -32,7 +32,7 @@ const MyAccount = () => {
   }, []);
 
   const handleBack = () => {
-    window.history.back();
+    navigate("/");
   };
 
   if (loading) {
@@ -51,21 +51,21 @@ const MyAccount = () => {
     <div className="my-account-container">
       <div className="card-container">
         <Card
-          title="Mis Datos"
+          title="MIS DATOS"
           content={userData}
           onIconClick={handleEditPersonalData}
         />
         <Card
-          title="Preferencias"
+          title="PREFERENCIAS"
           content={preferences}
           onIconClick={handleEditPreferences}
         />
       </div>
       <Button
-        text="Volver"
-        backgroundColor="var(--blue)"
-        textColor="var(--white)"
-        borderColor="var(--blue)"
+        text="VOLVER"
+        backgroundColor="var(--white)"
+        textColor="var(--black)"
+        borderColor="var(--black)"
         onClick={handleBack}
       />
       <Footer />

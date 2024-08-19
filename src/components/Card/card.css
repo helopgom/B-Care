@@ -1,34 +1,24 @@
 .card {
   background-color: var(--white);
-  border: 1px solid var(--border-color-secondary);
+  border: 1px solid var(--ligthWhite);
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  padding: 1.5em;
-  width: 100%;
-  position: relative; /* Añadido para posicionar el ícono dentro de la card */
-}
-
-.card-title {
-  font-size: 1.5em;
-  margin-bottom: 1em;
+  width: 80%;
+  position: relative;
+  padding: 1em;
+  height: 10em;
 }
 
 .card-content {
   font-size: 1.2em;
 }
-
-.card-item {
-  margin-bottom: 0.5em;
-}
-
-.card-icon-link {
+.edit-icon-button {
+  background-color: transparent;
+  border: none;
   position: absolute;
   bottom: 10px;
   right: 10px;
-}
-
-.card-icon {
-  width: 24px;
-  height: 24px;
+  background: none;
+  border: none;
   cursor: pointer;
 }
