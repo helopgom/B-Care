@@ -35,10 +35,6 @@ const MyAccount = () => {
     navigate("/");
   };
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
   const handleEditPersonalData = () => {
     navigate("/editPersonalData");
   };
@@ -47,32 +43,36 @@ const MyAccount = () => {
     navigate("/editPreferences");
   };
 
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
   return (
-    <div className="my-account-container">
-      <div className="card-container">
-        <Card
-          title="MIS DATOS"
-          content={userData}
-          onIconClick={handleEditPersonalData}
-        />
-        <Card
-          title="PREFERENCIAS"
-          content={preferences}
-          onIconClick={handleEditPreferences}
-        />
+    <div className="my-account-page">
+      <div className="my-account-content">
+        <div className="card-container">
+          <Card
+            title="MIS DATOS"
+            content={userData}
+            onIconClick={handleEditPersonalData}
+          />
+          <Card
+            title="PREFERENCIAS"
+            content={preferences}
+            onIconClick={handleEditPreferences}
+          />
+        </div>
+        <div className="back-button">
+          <Button
+            text="VOLVER"
+            backgroundColor="var(--white)"
+            textColor="var(--black)"
+            borderColor="var(--black)"
+            onClick={handleBack}
+          />
+        </div>
       </div>
-      <div className="back-button">
-        <Button
-          text="VOLVER"
-          backgroundColor="var(--white)"
-          textColor="var(--black)"
-          borderColor="var(--black)"
-          onClick={handleBack}
-        />
-      </div>
-      <div className="footer">
-        <Footer />
-      </div>
+      <Footer />
     </div>
   );
 };

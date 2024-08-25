@@ -1,8 +1,15 @@
 .edit-personal-data-page {
-  padding: 2em;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  min-height: 100vh;
+}
+
+.edit-personal-data-content {
+  flex-grow: 1;
+  padding: 2em;
+  padding-bottom: 80px; /* Adjust based on your footer height */
+  display: flex;
+  flex-direction: column;
 }
 
 .edit-personal-data-container {
@@ -10,15 +17,16 @@
   padding: 1em;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1em;
 }
 
-.edit-form {
-  display: flex;
-  flex-direction: column;
+.form-group {
+  margin-bottom: 1em;
 }
 
 .form-group label {
   display: block;
+  margin-bottom: 0.5em;
 }
 
 .form-group input {
@@ -29,9 +37,9 @@
   border-radius: 4px;
 }
 
-.button-group {
-  display: flex;
-  justify-content: space-between;
+.save-button,
+.cancel-button {
+  margin-top: 1em;
 }
 
 .popup {
@@ -45,10 +53,4 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 1000;
-}
-.footer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 200px;
 }

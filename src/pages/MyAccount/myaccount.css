@@ -1,8 +1,19 @@
-.my-account-container {
+export default MyAccount;
+
+// myAccount.css
+.my-account-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.my-account-content {
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 10%;
+  padding: 2em;
+  padding-bottom: 80px; 
 }
 
 .card-container {
@@ -10,12 +21,21 @@
   flex-direction: column;
   gap: 1em;
   width: 100%;
-  margin-top: 1em;
-  margin-left: 3em;
+  max-width: 600px; 
+  margin-bottom: 2em;
 }
+
 .back-button {
-  margin-top: 10%;
+  margin-top: 2em;
 }
-.footer {
-  margin-top: 10%;
+
+@media (max-width: 768px) {
+  .my-account-content {
+    padding: 1em;
+    padding-bottom: 80px; 
+  }
+
+  .card-container {
+    width: 100%;
+  }
 }
