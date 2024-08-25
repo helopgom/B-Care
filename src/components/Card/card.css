@@ -3,7 +3,7 @@
   border: 1px solid var(--ligthWhite);
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  width: 80%;
+  width: 100%;
   position: relative;
   padding: 1em;
   height: 10em;
@@ -21,4 +21,10 @@
   background: none;
   border: none;
   cursor: pointer;
+}
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  .card {
+    height: 15em;
+    margin-top: 1em;
+  }
 }
