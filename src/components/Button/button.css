@@ -1,0 +1,10 @@
+.custom-button {
+  border: 2px solid transparent;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  width: 300px;
+}
+
+.custom-button:hover {
+  opacity: 0.9;
+}
