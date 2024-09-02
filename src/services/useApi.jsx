@@ -13,7 +13,8 @@ const UseApi = ({ apiEndpoint, method = "GET", body = null, headers = {} }) => {
     const fetchData = async () => {
       try {
         let response;
-        const token = localStorage.getItem("token");
+        // const token = localStorage.getItem("token");
+        const token = "682eda1195c1e08d73e178c0d065ab28136424bc";
         const axiosConfig = {
           headers: {
             ...headers,

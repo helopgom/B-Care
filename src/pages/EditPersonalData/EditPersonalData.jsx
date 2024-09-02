@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./editPersonalData.css";
 import Footer from "../../components/Footer/Footer";
 import Button from "../../components/Button/Button";
 import { useNavigate } from "react-router-dom";
+import UseApi from "../../services/useApi";
+import { USER_DETAIL } from "../../config/urls";
 
 const EditPersonalData = () => {
   const [name, setName] = useState("");
@@ -11,19 +13,51 @@ const EditPersonalData = () => {
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
 
-  const handleSave = () => {
-    // Aquí iría la lógica para guardar los datos a través del CRUD
-    console.log("Datos guardados:", { name, birthDate, phone });
+  const {
+    data: userProfile,
+    loading: userLoading,
+    error: userError,
+  } = UseApi({
+    apiEndpoint: USER_DETAIL,
+    method: "GET",
+  });
+  useEffect(() => {
+    if (userProfile) {
+      setName(userProfile.first_name || "");
+      const formattedBirthDate = userProfile.birth_date
+        .split("-")
+        .reverse()
+        .join("-");
+      setBirthDate(formattedBirthDate || "");
+      setPhone(userProfile.phone || "");
+    }
+  }, [userProfile]);
 
-    // Mostrar el popup de éxito
-    setShowPopup(true);
+  const handleSave = async () => {
+    try {
+      const response = await axios.put(
+        USER_UPDATE,
+        {
+          first_name: name,
+          birth_date: birthDate.split("-").reverse().join("-"),
+          phone: phone,
+        },
+        {
+          headers: {
+            Authorization: `Token ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log("Datos guardados:", response.data);
 
-    // Ocultar el popup después de 10 segundos
-    setTimeout(() => {
-      setShowPopup(false);
-    }, 3000);
+      setShowPopup(true);
+      setTimeout(() => {
+        setShowPopup(false);
+      }, 3000);
+    } catch (error) {
+      console.error("Error al actualizar los datos:", error);
+    }
   };
-
   const handleCancel = () => {
     navigate("/myaccount");
   };

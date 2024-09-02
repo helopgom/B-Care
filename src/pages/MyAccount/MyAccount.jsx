@@ -4,40 +4,25 @@ import Card from "../../components/Card/Card";
 import Button from "../../components/Button/Button";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
+import UseApi from "../../services/useApi";
+import { USER_DETAIL } from "../../config/urls";
 
 const MyAccount = () => {
-  const [userData, setUserData] = useState({});
-  const [preferences, setPreferences] = useState({});
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const userResponse = await fetch("/api/user");
-        const userData = await userResponse.json();
-        setUserData(userData);
-
-        const prefsResponse = await fetch("/api/preferences");
-        const preferences = await prefsResponse.json();
-        setPreferences(preferences);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   const handleBack = () => {
     navigate("/");
   };
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
+  const {
+    data: userProfile,
+    loading: userLoading,
+    error: userError,
+  } = UseApi({
+    apiEndpoint: USER_DETAIL,
+    method: "GET",
+  });
 
   const handleEditPersonalData = () => {
     navigate("/editPersonalData");
@@ -46,20 +31,33 @@ const MyAccount = () => {
   const handleEditPreferences = () => {
     navigate("/editPreferences");
   };
+  if (userLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (userError) {
+    return <p>Error: {userError}</p>;
+  }
 
   return (
     <div className="my-account-container">
       <div className="card-container">
         <Card
           title="MIS DATOS"
-          content={userData}
+          children={
+            <>
+              <p>Nombre: {userProfile?.first_name}</p>
+              <p>Fecha nacimiento: {userProfile?.birth_date}</p>
+              <p>Teléfono: {userProfile?.phone}</p>
+            </>
+          }
           onIconClick={handleEditPersonalData}
         />
-        <Card
+        {/* <Card
           title="PREFERENCIAS"
           content={preferences}
           onIconClick={handleEditPreferences}
-        />
+        /> */}
       </div>
       <div className="back-button">
         <Button

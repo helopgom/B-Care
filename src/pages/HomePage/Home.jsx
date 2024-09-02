@@ -4,27 +4,36 @@ import InteractiveText from "../../components/InteractiveText/InteractiveText";
 import Button from "../../components/Button/Button";
 import Footer from "../../components/Footer/Footer";
 import ButtonWithIcon from "../../components/ButtonWithIcon/ButtonWithIcon";
+import UseApi from "../../services/useApi";
+import { USER_DETAIL } from "../../config/urls";
 
 const Home = () => {
-  const [name, setName] = useState("");
   const [isTalking, setIsTalking] = useState(false);
 
-  useEffect(() => {
-    const fetchName = async () => {
-      const fetchedName = "Juan"; // Simulación de obtención de nombre
-      setName(fetchedName);
-    };
-
-    fetchName();
-  }, []);
+  const {
+    data: userProfile,
+    loading: userLoading,
+    error: userError,
+  } = UseApi({
+    apiEndpoint: USER_DETAIL,
+    method: "GET",
+  });
 
   const handleFinish = () => {
     setIsTalking(false);
   };
 
+  if (userLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (userError) {
+    return <p>Error: {userError}</p>;
+  }
+
   return (
     <div className="home-container">
-      <InteractiveText name={name} isTalking={isTalking} />
+      <InteractiveText name={userProfile?.first_name} isTalking={isTalking} />
       <ButtonWithIcon isTalking={isTalking} setIsTalking={setIsTalking} />
 
       {!isTalking && (
