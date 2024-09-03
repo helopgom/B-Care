@@ -14,7 +14,7 @@ const UseApi = ({ apiEndpoint, method = "GET", body = null, headers = {} }) => {
       try {
         let response;
         // const token = localStorage.getItem("token");
-        const token = "682eda1195c1e08d73e178c0d065ab28136424bc";
+        const token = "4c5f705bfaf12b5892c5f50222d06615390369aa";
         const axiosConfig = {
           headers: {
             ...headers,
