@@ -3,8 +3,8 @@ import "./editPersonalData.css";
 import Footer from "../../components/Footer/Footer";
 import Button from "../../components/Button/Button";
 import { useNavigate } from "react-router-dom";
-import UseApi from "../../services/useApi";
-import { USER_DETAIL, USER_UPDATE } from "../../config/urls";
+import useApi from "../../services/useApi";
+import { USER_UPDATE, userProfileEndpoint } from "../../config/urls";
 import axios from "axios";
 
 const EditPersonalData = () => {
@@ -16,9 +16,12 @@ const EditPersonalData = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // Usar UseApi para obtener los datos iniciales del usuario
-  const { data: userProfile, error: userError } = UseApi({
-    apiEndpoint: USER_DETAIL,
+  const {
+    data: userProfile,
+    loading,
+    error: userError,
+  } = useApi({
+    apiEndpoint: userProfileEndpoint,
     method: "GET",
   });
 
@@ -45,7 +48,6 @@ const EditPersonalData = () => {
       updatedData.first_name = name;
     }
 
-    // Convertir la fecha al formato YYYY-MM-DD antes de enviarla al backend
     const [day, month, year] = birthDate.split("-");
     const formattedBirthDate = `${year}-${month}-${day}`;
     if (formattedBirthDate !== initialData.birth_date) {
@@ -62,7 +64,7 @@ const EditPersonalData = () => {
     }
 
     try {
-      const token = "4c5f705bfaf12b5892c5f50222d06615390369aa"; // Usa el token hardcodeado
+      const token = localStorage.getItem("token");
       const response = await axios.put(USER_UPDATE, updatedData, {
         headers: {
           Authorization: `Token ${token}`,
@@ -91,6 +93,14 @@ const EditPersonalData = () => {
   const handleCancel = () => {
     navigate("/myaccount");
   };
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (userError) {
+    return <p>Error al cargar los datos: {userError}</p>;
+  }
 
   return (
     <div className="edit-personal-data-page">
@@ -148,9 +158,6 @@ const EditPersonalData = () => {
           <p>¡Datos guardados con éxito!</p>
         </div>
       )}
-      <div className="footer">
-        <Footer />
-      </div>
     </div>
   );
 };

@@ -1,5 +1,11 @@
-.footer-container {
-  position: absolute;
+.footer {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: dodgerblue;
+  bottom: 0;
+  height: 15vh;
   width: 100%;
 }
 #separator {
@@ -11,7 +17,6 @@
 #emergency {
   display: flex;
   justify-content: center;
-  margin-top: 1em;
 }
 
 .custom-button {

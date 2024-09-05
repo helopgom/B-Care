@@ -9,17 +9,18 @@
 }
 body,
 html {
-  height: 100%;
   margin: 0;
   padding: 0;
 }
 
 .page-container {
-  display: flex;
-  flex-direction: column;
+  position: relative;
   min-height: 100vh;
+  flex-direction: column;
 }
-
+.content-wrap {
+  padding-bottom: 15vh;
+}
 .content {
   flex: 1;
 }

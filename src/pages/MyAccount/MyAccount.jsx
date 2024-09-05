@@ -1,28 +1,38 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./myAccount.css";
 import Card from "../../components/Card/Card";
 import Button from "../../components/Button/Button";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
-import UseApi from "../../services/useApi";
-import { USER_DETAIL } from "../../config/urls";
+import useApi from "../../services/useApi";
+import { userProfileEndpoint } from "../../config/urls";
 
 const MyAccount = () => {
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const [userProfile, setUserProfile] = useState(null); // Estado para el perfil completo
+  const { request, data, error, loading } = useApi({
+    apiEndpoint: userProfileEndpoint,
+    method: "GET",
+  });
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const response = await request();
+        const userProfileData = response.data[0];
+        setUserProfile(userProfileData);
+        localStorage.setItem("name", userProfileData.name);
+      } catch (err) {
+        console.error("Error fetching user profile:", err);
+      }
+    };
+
+    fetchUserProfile();
+  }, [request]);
 
   const handleBack = () => {
     navigate("/");
   };
-
-  const {
-    data: userProfile,
-    loading: userLoading,
-    error: userError,
-  } = UseApi({
-    apiEndpoint: USER_DETAIL,
-    method: "GET",
-  });
 
   const handleEditPersonalData = () => {
     navigate("/editPersonalData");
@@ -31,13 +41,20 @@ const MyAccount = () => {
   const handleEditPreferences = () => {
     navigate("/editPreferences");
   };
-  if (userLoading) {
+
+  if (loading) {
     return <p>Loading...</p>;
   }
 
-  if (userError) {
-    return <p>Error: {userError}</p>;
+  if (error) {
+    return <p>Error: {error}</p>;
   }
+
+  if (!userProfile) {
+    return <p>No user profile found</p>;
+  }
+
+  const { name, birth_date, phone, preferences } = userProfile;
 
   return (
     <div className="my-account-container">
@@ -46,19 +63,29 @@ const MyAccount = () => {
           title="MIS DATOS"
           children={
             <>
-              <p>Nombre: {userProfile?.first_name}</p>
-              <p>Fecha nacimiento: {userProfile?.birth_date}</p>
-              <p>Teléfono: {userProfile?.phone}</p>
+              <p>Nombre: {name}</p>
+              <p>Fecha nacimiento: {birth_date}</p>
+              <p>Teléfono: {phone}</p>
             </>
           }
           onIconClick={handleEditPersonalData}
         />
-        {/* <Card
+
+        <Card
           title="PREFERENCIAS"
-          content={preferences}
+          children={
+            <>
+              {preferences?.length > 0 ? (
+                preferences.map((pref, index) => <p key={index}>{pref.name}</p>)
+              ) : (
+                <p>No preferences available</p>
+              )}
+            </>
+          }
           onIconClick={handleEditPreferences}
-        /> */}
+        />
       </div>
+
       <div className="back-button">
         <Button
           text="VOLVER"
@@ -67,9 +94,6 @@ const MyAccount = () => {
           borderColor="var(--black)"
           onClick={handleBack}
         />
-      </div>
-      <div className="footer">
-        <Footer />
       </div>
     </div>
   );

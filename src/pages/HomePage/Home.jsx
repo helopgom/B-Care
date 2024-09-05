@@ -5,7 +5,7 @@ import Button from "../../components/Button/Button";
 import Footer from "../../components/Footer/Footer";
 import ButtonWithIcon from "../../components/ButtonWithIcon/ButtonWithIcon";
 import UseApi from "../../services/useApi";
-import { USER_DETAIL } from "../../config/urls";
+import { userProfileEndpoint } from "../../config/urls";
 
 const Home = () => {
   const [isTalking, setIsTalking] = useState(false);
@@ -15,7 +15,7 @@ const Home = () => {
     loading: userLoading,
     error: userError,
   } = UseApi({
-    apiEndpoint: USER_DETAIL,
+    apiEndpoint: userProfileEndpoint,
     method: "GET",
   });
 
@@ -60,9 +60,6 @@ const Home = () => {
           />
         </div>
       )}
-      <div>
-        <Footer />
-      </div>
     </div>
   );
 };

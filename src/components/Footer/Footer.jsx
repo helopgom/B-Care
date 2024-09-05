@@ -8,17 +8,14 @@ const Footer = () => {
   };
 
   return (
-    <div className="footer-container">
-      <hr id="separator" />
-      <div id="emergency">
-        <Button
-          text="EMERGENCIA"
-          backgroundColor="var(--lightRed)"
-          textColor="var(--white)"
-          borderColor="var(--red)"
-          onClick={handleEmergencyClick}
-        />
-      </div>
+    <div className="footer">
+      <Button
+        text="EMERGENCIA"
+        backgroundColor="var(--lightRed)"
+        textColor="var(--white)"
+        borderColor="var(--red)"
+        onClick={handleEmergencyClick}
+      />
     </div>
   );
 };

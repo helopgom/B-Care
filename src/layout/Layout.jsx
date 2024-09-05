@@ -1,12 +1,13 @@
 import { Outlet } from "react-router-dom";
-import Button from "../components/Button/Button";
+import Footer from "../components/Footer/Footer";
 
 const Layout = () => {
   return (
-    <div>
-      <main>
+    <div className="page-container">
+      <main className="content-wrap">
         <Outlet />
       </main>
+      <Footer />
     </div>
   );
 };

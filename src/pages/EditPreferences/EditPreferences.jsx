@@ -2,70 +2,79 @@ import React, { useState } from "react";
 import "./editPreferences.css";
 import Button from "../../components/Button/Button";
 import Footer from "../../components/Footer/Footer";
+import useApi from "../../services/useApi"; // Asegúrate de usar "useApi" en lugar de "UseApi"
+import { USER_UPDATE, userProfileEndpoint } from "../../config/urls";
+import axios from "axios";
 
 const EditPreferences = () => {
-  const [selectedTopics, setSelectedTopics] = useState(["Viajes", "Deportes"]);
-  const [newTopic, setNewTopic] = useState("");
+  const [newTopic, setNewTopic] = useState(""); // Nombre de la preferencia
   const [showPopup, setShowPopup] = useState(false);
 
-  const handleAddTopic = () => {
-    if (newTopic.trim() !== "" && !selectedTopics.includes(newTopic)) {
-      setSelectedTopics([...selectedTopics, newTopic]);
-      setNewTopic(""); // Limpia el campo de entrada después de añadir
+  // Cargar datos del perfil del usuario
+  const {
+    data: userProfile,
+    loading,
+    error,
+  } = useApi({
+    apiEndpoint: userProfileEndpoint,
+    method: "GET",
+  });
+
+  const handleAddTopic = async () => {
+    if (newTopic.trim() !== "") {
+      try {
+        const token = localStorage.getItem("token");
+
+        console.log("Datos a enviar:", { preferences: [newTopic] });
+
+        const response = await axios.put(
+          USER_UPDATE,
+          { preferences: [newTopic] },
+          {
+            headers: {
+              Authorization: `Token ${token}`,
+            },
+          }
+        );
+        console.log("Preferencia guardada:", response.data);
+
+        setShowPopup(true);
+        setTimeout(() => {
+          setShowPopup(false);
+        }, 3000);
+      } catch (error) {
+        console.error("Error al guardar la preferencia:", error);
+      }
+
+      setNewTopic(""); // Limpiar el campo de entrada
     }
-  };
-
-  const handleRemoveTopic = (topic) => {
-    setSelectedTopics(selectedTopics.filter((t) => t !== topic));
-  };
-
-  const handleSave = () => {
-    // Aquí iría la lógica para guardar las preferencias a través del CRUD
-    console.log("Temáticas guardadas:", selectedTopics);
-
-    // Mostrar el popup de éxito
-    setShowPopup(true);
-
-    // Ocultar el popup después de 3 segundos
-    setTimeout(() => {
-      setShowPopup(false);
-    }, 3000);
-  };
-
-  const handleCancel = () => {
-    // Volver a la página anterior
-    window.history.back();
   };
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      e.preventDefault(); // Evita que el formulario se envíe si es un <form>
+      e.preventDefault(); // Evita que el formulario se envíe
       handleAddTopic();
     }
   };
+
+  const handleCancel = () => {
+    window.history.back(); // Navegar hacia atrás
+  };
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error al cargar los datos del usuario: {error}</p>;
+  }
 
   return (
     <div className="edit-preferences-page">
       <div className="edit-preferences-container">
         <h2>Editar Preferencias</h2>
         <div className="form-group">
-          <label>Temáticas Escogidas</label>
-          <div className="selected-topics">
-            {selectedTopics.map((topic, index) => (
-              <div key={index} className="topic-item">
-                {topic}
-                <button
-                  className="remove-topic-button"
-                  onClick={() => handleRemoveTopic(topic)}
-                >
-                  ✕
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="form-group">
-          <label>Añade Temáticas</label>
+          <label>Añade Temática</label>
           <input
             type="text"
             value={newTopic}
@@ -80,10 +89,11 @@ const EditPreferences = () => {
             backgroundColor="var(--black)"
             textColor="var(--white)"
             borderColor="var(--blue)"
-            onClick={handleSave}
+            onClick={handleAddTopic}
           />
         </div>
       </div>
+
       <div className="cancel-button">
         <Button
           text="Cancelar"
@@ -96,13 +106,9 @@ const EditPreferences = () => {
 
       {showPopup && (
         <div className="popup">
-          <p>¡Datos guardados con éxito!</p>
+          <p>¡Preferencia guardada con éxito!</p>
         </div>
       )}
-
-      <div className="footer">
-        <Footer />
-      </div>
     </div>
   );
 };

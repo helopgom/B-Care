@@ -1,54 +1,46 @@
-import React, { useState, useEffect } from "react";
+import { useState, useCallback } from "react";
 import axios from "axios";
 
-const UseApi = ({ apiEndpoint, method = "GET", body = null, headers = {} }) => {
+const useApi = ({ apiEndpoint, method = "GET" }) => {
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    console.log("useEffect triggered with:", { apiEndpoint, method });
-    if (!apiEndpoint) return;
+  const request = useCallback(
+    async (body = null) => {
+      setLoading(true);
+      setError(null);
 
-    const fetchData = async () => {
       try {
-        let response;
-        // const token = localStorage.getItem("token");
-        const token = "4c5f705bfaf12b5892c5f50222d06615390369aa";
-        const axiosConfig = {
+        const token = localStorage.getItem("token");
+
+        const response = await axios({
+          url: apiEndpoint,
+          method,
+          data: body,
           headers: {
-            ...headers,
             Authorization: token ? `Token ${token}` : "",
           },
-        };
-        switch (method.toUpperCase()) {
-          case "POST":
-            response = await axios.post(apiEndpoint, body, axiosConfig);
-            break;
-          case "PUT":
-            response = await axios.put(apiEndpoint, body, axiosConfig);
-            break;
-          case "DELETE":
-            response = await axios.delete(apiEndpoint, axiosConfig);
-            break;
-          case "GET":
-          default:
-            response = await axios.get(apiEndpoint, axiosConfig);
-            break;
-        }
+        });
+
         setData(response.data);
         setLoading(false);
-      } catch (error) {
-        setError(error.message);
+        return response;
+      } catch (err) {
+        setError(err.response ? err.response.data : err.message);
         setLoading(false);
-        console.error(`Error fetching data: ${error.message}`);
+        throw err;
       }
-    };
+    },
+    [apiEndpoint, method]
+  );
 
-    fetchData();
-  }, [apiEndpoint, method]);
-
-  return { data, loading, error };
+  return {
+    data,
+    loading,
+    error,
+    request,
+  };
 };
 
-export default UseApi;
+export default useApi;
