@@ -3,7 +3,6 @@ import "./myAccount.css";
 import Card from "../../components/Card/Card";
 import Button from "../../components/Button/Button";
 import { useNavigate } from "react-router-dom";
-import Footer from "../../components/Footer/Footer";
 import useApi from "../../services/useApi";
 import { userProfileEndpoint } from "../../config/urls";
 
@@ -20,6 +19,7 @@ const MyAccount = () => {
       try {
         const response = await request();
         const userProfileData = response.data[0];
+        console.log(JSON.stringify(userProfileData));
         setUserProfile(userProfileData);
         localStorage.setItem("name", userProfileData.name);
       } catch (err) {
@@ -59,31 +59,18 @@ const MyAccount = () => {
   return (
     <div className="my-account-container">
       <div className="card-container">
-        <Card
-          title="MIS DATOS"
-          children={
-            <>
-              <p>Nombre: {name}</p>
-              <p>Fecha nacimiento: {birth_date}</p>
-              <p>Teléfono: {phone}</p>
-            </>
-          }
-          onIconClick={handleEditPersonalData}
-        />
-
-        <Card
-          title="PREFERENCIAS"
-          children={
-            <>
-              {preferences?.length > 0 ? (
-                preferences.map((pref, index) => <p key={index}>{pref.name}</p>)
-              ) : (
-                <p>No preferences available</p>
-              )}
-            </>
-          }
-          onIconClick={handleEditPreferences}
-        />
+        <Card title="MIS DATOS" onIconClick={handleEditPersonalData}>
+          <p>Nombre: {name}</p>
+          <p>Fecha nacimiento: {birth_date}</p>
+          <p>Teléfono: {phone}</p>
+        </Card>
+        <Card title="PREFERENCIAS" onIconClick={handleEditPreferences}>
+          {preferences?.length > 0 ? (
+            preferences.map((pref, index) => <p key={index}>{pref.name}</p>)
+          ) : (
+            <p>No preferences available</p>
+          )}
+        </Card>
       </div>
 
       <div className="back-button">

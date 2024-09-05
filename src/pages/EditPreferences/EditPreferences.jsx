@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./editPreferences.css";
 import Button from "../../components/Button/Button";
-import Footer from "../../components/Footer/Footer";
 import useApi from "../../services/useApi"; // Asegúrate de usar "useApi" en lugar de "UseApi"
 import { USER_UPDATE, userProfileEndpoint } from "../../config/urls";
 import axios from "axios";
@@ -81,6 +80,7 @@ const EditPreferences = () => {
             onChange={(e) => setNewTopic(e.target.value)}
             onKeyDown={handleKeyDown} // Captura la tecla "Enter"
             placeholder="Escriba un tema del que te guste hablar"
+            style={{ maxWidth: "100%" }}
           />
         </div>
         <div className="save-button">

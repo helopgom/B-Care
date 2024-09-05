@@ -18,9 +18,13 @@ html {
   min-height: 100vh;
   flex-direction: column;
 }
-.content-wrap {
-  padding-bottom: 15vh;
-}
-.content {
-  flex: 1;
+.footer {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 0;
+  height: 15vh;
+  width: 100%;
+  border-top: var(--lilac) solid 5px;
 }

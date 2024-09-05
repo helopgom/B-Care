@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./editPersonalData.css";
-import Footer from "../../components/Footer/Footer";
 import Button from "../../components/Button/Button";
 import { useNavigate } from "react-router-dom";
 import useApi from "../../services/useApi";
@@ -11,13 +10,15 @@ const EditPersonalData = () => {
   const [name, setName] = useState("");
   const [birthDate, setBirthDate] = useState("");
   const [phone, setPhone] = useState("");
-  const [initialData, setInitialData] = useState({});
-  const [showPopup, setShowPopup] = useState(false);
+  const [userProfile, setUserProfile] = useState(null); // Para manejar el perfil completo
   const [error, setError] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
 
+  // Usar el hook useApi para obtener el perfil del usuario
   const {
-    data: userProfile,
+    request,
+    data,
     loading,
     error: userError,
   } = useApi({
@@ -26,35 +27,35 @@ const EditPersonalData = () => {
   });
 
   useEffect(() => {
-    if (userProfile) {
-      setInitialData(userProfile);
-      setName(userProfile.first_name || "");
-      const formattedBirthDate = userProfile.birth_date
-        .split("-")
-        .reverse()
-        .join("-");
-      setBirthDate(formattedBirthDate || "");
-      setPhone(userProfile.phone || "");
-    } else if (userError) {
-      console.error("Error al obtener los datos del usuario:", userError);
-      setError("Error al obtener los datos del usuario.");
-    }
-  }, [userProfile, userError]);
+    const fetchUserProfile = async () => {
+      try {
+        const response = await request();
+        const userProfileData = response.data[0]; // Obtener el primer objeto del array
+        setUserProfile(userProfileData);
+        setName(userProfileData.name || "");
+        setBirthDate(userProfileData.birth_date || "");
+        setPhone(userProfileData.phone || "");
+      } catch (err) {
+        console.error("Error al obtener los datos del usuario:", err);
+        setError("Error al obtener los datos del usuario.");
+      }
+    };
+
+    fetchUserProfile();
+  }, [request]);
 
   const handleSave = async () => {
     const updatedData = {};
 
-    if (name !== initialData.first_name) {
-      updatedData.first_name = name;
+    if (name !== userProfile.first_name) {
+      updatedData.name = name;
     }
 
-    const [day, month, year] = birthDate.split("-");
-    const formattedBirthDate = `${year}-${month}-${day}`;
-    if (formattedBirthDate !== initialData.birth_date) {
-      updatedData.birth_date = formattedBirthDate;
+    if (birthDate !== userProfile.birth_date) {
+      updatedData.birth_date = birthDate;
     }
 
-    if (phone !== initialData.phone) {
+    if (phone !== userProfile.phone) {
       updatedData.phone = phone;
     }
 

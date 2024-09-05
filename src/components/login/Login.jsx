@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import useApi from "../../services/useApi";
 import { USER_LOGIN } from "../../config/urls";
 import "./login.css";
+import Button from "../Button/Button";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -54,7 +55,7 @@ const Login = () => {
     <div className="container">
       <div className="form-container">
         <div className="form-header">
-          <h2 aria-label="Welcome">Welcome!</h2>
+          <h2 className="Welcome">Welcome!</h2>
         </div>
         <form className="form" onSubmit={handleSubmit}>
           <div className="form-group">
@@ -103,13 +104,13 @@ const Login = () => {
         </form>
 
         <p className="signup-text">
-          Don't have an account?
+          NUEVOS CLIENTES
           <Link
             to="/register"
             className="signup-link"
             aria-label="Sign up for a new account"
           >
-            Sign up here
+            Registra
           </Link>
         </p>
       </div>

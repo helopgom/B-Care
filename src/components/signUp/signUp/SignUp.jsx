@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useApi from "../../../services/useApi";
-import { USER_REGISTER } from "../../../config/urls";
+import { BASE_URL, USER_REGISTER } from "../../../config/urls";
 import FormateForm from "../form/FormateForm";
 import "./signup.css";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
+    name: "",
     email: "",
     phone: "",
     birth_date: "",
@@ -17,8 +16,7 @@ const SignUp = () => {
   });
 
   const [isTyping, setIsTyping] = useState({
-    first_name: false,
-    last_name: false,
+    name: false,
     email: false,
     phone: false,
     birth_date: false,
@@ -26,10 +24,8 @@ const SignUp = () => {
     password: false,
   });
 
-  const [message, setMessage] = useState("");
-  const navigate = useNavigate();
-  const { request } = useApi({
-    apiEndpoint: USER_REGISTER,
+  const { request, loading, error } = useApi({
+    apiEndpoint: `${BASE_URL}register/`,
     method: "POST",
   });
 
@@ -55,34 +51,52 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage("");
+
+    // Convertir la fecha a formato yyyy-mm-dd usando Date
+    const formattedBirthDate = new Date(formData.birth_date)
+      .toISOString()
+      .split("T")[0];
+
+    const requestData = {
+      ...formData,
+      birth_date: formattedBirthDate, // Aplicar el formato correcto
+    };
+
     try {
-      const response = await request(formData);
-      if (response.status === 201) {
-        setMessage("User created successfully.");
-        setTimeout(() => {
-          navigate("/login");
-        }, 2000);
-      }
-    } catch (error) {
-      setMessage("Error occurred during registration.");
+      await request(requestData); // Enviar los datos corregidos
+      navigate("/");
+    } catch (err) {
+      console.error("Registration error:", err.response?.data || err.message);
     }
+  };
+
+  const renderError = () => {
+    if (!error) return null;
+    if (typeof error === "object") {
+      return (
+        <ul style={{ color: "red" }}>
+          {Object.entries(error).map(([key, value]) => (
+            <li key={key}>{`${key}: ${value}`}</li>
+          ))}
+        </ul>
+      );
+    }
+    return <p style={{ color: "red" }}>{error}</p>;
   };
 
   return (
     <div className="signup-container">
-      <div className="signup-form bg-primary p-8 rounded-lg shadow-lg">
-        {message && <p className="message">{message}</p>}
+      <div className="signup-form">
         <form onSubmit={handleSubmit}>
-          <div className="form-group space-y-6">
+          <div className="form-group">
             <FormateForm
-              label="First Name"
+              label="Nombre"
               id="first_name"
               name="first_name"
               placeholder="Juan"
               pattern="^[A-Z][a-z]*$"
               required={true}
-              hint="Name must start with an uppercase letter."
+              hint="El nombre debe empezar por una letra mayúscula."
               value={formData.first_name}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -104,16 +118,16 @@ const SignUp = () => {
             />
 
             <FormateForm
-              label="Phone"
+              label="Teléfono"
               id="phone"
               name="phone"
               type="tel"
-              placeholder="Enter your phone number"
+              placeholder="Escriba su número de móvil"
               pattern="^\+?[1-9]\d{1,14}$"
               required={true}
               minLength={9}
               maxLength={15}
-              hint="Please enter a valid phone."
+              hint="Por favor, añada un número válido"
               value={formData.phone}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -121,13 +135,13 @@ const SignUp = () => {
             />
 
             <FormateForm
-              label="Birth Date"
+              label="Fecha de nacimiento"
               id="birth-date"
               name="birth_date"
               type="date"
               required={true}
-              placeholder="Enter your birth date yyyy-mm-dd"
-              hint="Please enter a valid birth date."
+              placeholder="Añade tu fecha en formato yyyy-mm-dd"
+              hint="Por favor añade una fecha válida."
               value={formData.birth_date}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -135,14 +149,14 @@ const SignUp = () => {
             />
 
             <FormateForm
-              label="Password"
+              label="Contraseña"
               id="password"
               name="password"
               type="password"
               placeholder="********"
               pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$"
               required={true}
-              hint="Must be at least 8 characters, include one uppercase letter, one number, and one special character."
+              hint="Debe tener al menos 8 caracteres, una mayúscula, un número, y un caracter especial."
               value={formData.password}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -150,16 +164,16 @@ const SignUp = () => {
             />
           </div>
 
-          <div className="form-actions mt-6 flex items-center justify-end gap-x-6">
+          <div className="form-actions">
             <button type="submit" className="submit-btn">
               Create User
             </button>
           </div>
         </form>
 
-        <p className="login-link mt-10 text-center text-sm">
+        <p className="login-link ">
           You already have an account?{" "}
-          <a href="/login" className="text-secondary hover:text-yellow-500">
+          <a href="/login" className="text-secondary">
             Login here
           </a>
         </p>

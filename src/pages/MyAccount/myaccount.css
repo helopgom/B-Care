@@ -2,16 +2,17 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 10%;
+  max-width: 100%;
 }
 
 .card-container {
   display: flex;
   flex-direction: column;
   gap: 1em;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  margin-top: 1em;
-  margin-left: 3em;
+  padding-top: 1em;
 }
 .back-button {
   margin-top: 10%;
