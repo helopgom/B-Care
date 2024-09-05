@@ -3,13 +3,14 @@ import "./editPersonalData.css";
 import Button from "../../components/Button/Button";
 import { useNavigate } from "react-router-dom";
 import useApi from "../../services/useApi";
-import { USER_UPDATE, userProfileEndpoint } from "../../config/urls";
+import { userProfileEndpoint } from "../../config/urls";
 import axios from "axios";
 
 const EditPersonalData = () => {
   const [name, setName] = useState("");
   const [birthDate, setBirthDate] = useState("");
   const [phone, setPhone] = useState("");
+  const [userId, setUserId] = useState(null); // Estado para almacenar el ID del usuario
   const [userProfile, setUserProfile] = useState(null); // Para manejar el perfil completo
   const [error, setError] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
@@ -32,6 +33,7 @@ const EditPersonalData = () => {
         const response = await request();
         const userProfileData = response.data[0]; // Obtener el primer objeto del array
         setUserProfile(userProfileData);
+        setUserId(userProfileData.id); // Guardar el ID del usuario en el estado
         setName(userProfileData.name || "");
         setBirthDate(userProfileData.birth_date || "");
         setPhone(userProfileData.phone || "");
@@ -44,50 +46,47 @@ const EditPersonalData = () => {
     fetchUserProfile();
   }, [request]);
 
-  const handleSave = async () => {
-    const updatedData = {};
+  const handleSave = async (e) => {
+    e.preventDefault();
 
-    if (name !== userProfile.first_name) {
-      updatedData.name = name;
+    if (!userId) {
+      console.error("User ID is not available");
+      return;
     }
 
+    const requestData = {};
+
+    if (name !== userProfile.name) {
+      requestData.name = name;
+    }
     if (birthDate !== userProfile.birth_date) {
-      updatedData.birth_date = birthDate;
+      requestData.birth_date = new Date(birthDate).toISOString().split("T")[0];
     }
-
     if (phone !== userProfile.phone) {
-      updatedData.phone = phone;
+      requestData.phone = phone;
     }
 
-    if (Object.keys(updatedData).length === 0) {
-      setError("No has realizado ningún cambio.");
+    if (Object.keys(requestData).length === 0) {
+      console.log("No se han realizado cambios.");
       return;
     }
 
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.put(USER_UPDATE, updatedData, {
+
+      const config = {
         headers: {
           Authorization: `Token ${token}`,
         },
-      });
-      console.log("Datos guardados:", response.data);
+      };
+
+      const url = `${userProfileEndpoint}${userId}/`;
+
+      await axios.patch(url, requestData, config);
       setShowPopup(true);
-      setTimeout(() => {
-        setShowPopup(false);
-        navigate("/myaccount");
-      }, 3000);
-    } catch (error) {
-      console.error("Error al actualizar los datos:", error);
-      if (error.response && error.response.data) {
-        setError(
-          `Error al actualizar los datos: ${JSON.stringify(
-            error.response.data
-          )}`
-        );
-      } else {
-        setError("Error al actualizar los datos. Inténtalo de nuevo.");
-      }
+      console.log("User updated successfully!");
+    } catch (err) {
+      console.error("Update error:", err.response?.data || err.message);
     }
   };
 
