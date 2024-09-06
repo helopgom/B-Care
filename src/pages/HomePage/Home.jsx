@@ -9,6 +9,8 @@ import { userProfileEndpoint } from "../../config/urls";
 
 const Home = () => {
   const [isTalking, setIsTalking] = useState(false);
+  const [conversationText, setConversationText] = useState(""); // Para almacenar el texto de la conversación
+  const [responseText, setResponseText] = useState(""); // Para almacenar la respuesta de la IA
 
   const {
     data: userProfile,
@@ -18,6 +20,44 @@ const Home = () => {
     apiEndpoint: userProfileEndpoint,
     method: "GET",
   });
+
+  // Función para iniciar el reconocimiento de voz
+  const startRecognition = () => {
+    const recognition = new (window.SpeechRecognition ||
+      window.webkitSpeechRecognition)();
+    recognition.lang = "es-ES";
+    recognition.onresult = (event) => {
+      const userText = event.results[0][0].transcript;
+      setConversationText(userText); // Almacenar el texto hablado
+      console.log("Texto capturado:", userText);
+      sendTextToBackend(userText); // Enviar el texto al backend
+    };
+    recognition.start();
+  };
+
+  // Función para enviar el texto al backend
+  const sendTextToBackend = (text) => {
+    fetch("http://localhost:8000/api/v1/conversation/conversation/", {
+      // Ajusta el endpoint según tu configuración de Django
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ user_text: text }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setResponseText(data.response); // Almacenar la respuesta de la IA
+      })
+      .catch((error) => {
+        console.error("Error al enviar el texto al backend:", error);
+      });
+  };
+
+  const handleStartTalking = () => {
+    setIsTalking(true);
+    startRecognition(); // Iniciar reconocimiento de voz
+  };
 
   const handleFinish = () => {
     setIsTalking(false);
@@ -34,7 +74,7 @@ const Home = () => {
   return (
     <div className="home-container">
       <InteractiveText name={userProfile?.first_name} isTalking={isTalking} />
-      <ButtonWithIcon isTalking={isTalking} setIsTalking={setIsTalking} />
+      <ButtonWithIcon isTalking={isTalking} setIsTalking={handleStartTalking} />
 
       {!isTalking && (
         <div className="button-container">
@@ -58,6 +98,9 @@ const Home = () => {
             link="#"
             onClick={handleFinish}
           />
+          <p>Texto hablado: {conversationText}</p>
+          <p>Respuesta de la IA: {responseText}</p>{" "}
+          {/* Mostrar la respuesta de la IA */}
         </div>
       )}
     </div>
