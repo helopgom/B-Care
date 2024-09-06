@@ -1,71 +1,150 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./editPreferences.css";
 import Button from "../../components/Button/Button";
-import useApi from "../../services/useApi"; // Asegúrate de usar "useApi" en lugar de "UseApi"
-import { USER_UPDATE, userProfileEndpoint } from "../../config/urls";
+import { useNavigate } from "react-router-dom";
+import useApi from "../../services/useApi";
+import { userProfileEndpoint, USER_UPDATE } from "../../config/urls";
 import axios from "axios";
 
 const EditPreferences = () => {
-  const [newTopic, setNewTopic] = useState(""); // Nombre de la preferencia
+  const [newTopic, setNewTopic] = useState(""); // Nueva preferencia
+  const [preferences, setPreferences] = useState([]); // Lista de preferencias
+  const [userId, setUserId] = useState(null); // Estado para almacenar el ID del usuario
+  const [userProfile, setUserProfile] = useState(null); // Para manejar el perfil completo
+  const [error, setError] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
+  const navigate = useNavigate();
 
-  // Cargar datos del perfil del usuario
+  // Usar el hook useApi para obtener el perfil del usuario
   const {
-    data: userProfile,
+    request,
+    data,
     loading,
-    error,
+    error: userError,
   } = useApi({
     apiEndpoint: userProfileEndpoint,
     method: "GET",
   });
 
-  const handleAddTopic = async () => {
-    if (newTopic.trim() !== "") {
+  useEffect(() => {
+    const fetchUserProfile = async () => {
       try {
-        const token = localStorage.getItem("token");
-
-        console.log("Datos a enviar:", { preferences: [newTopic] });
-
-        const response = await axios.put(
-          USER_UPDATE,
-          { preferences: [newTopic] },
-          {
-            headers: {
-              Authorization: `Token ${token}`,
-            },
-          }
-        );
-        console.log("Preferencia guardada:", response.data);
-
-        setShowPopup(true);
-        setTimeout(() => {
-          setShowPopup(false);
-        }, 3000);
-      } catch (error) {
-        console.error("Error al guardar la preferencia:", error);
+        const response = await request();
+        const userProfileData = response.data[0]; // Obtener el primer objeto del array
+        setUserProfile(userProfileData);
+        setUserId(userProfileData.id); // Guardar el ID del usuario en el estado
+        setPreferences(
+          userProfileData.preferences
+            ? userProfileData.preferences.split(", ")
+            : []
+        ); // Dividir las preferencias si vienen en string
+      } catch (err) {
+        console.error("Error al obtener los datos del usuario:", err);
+        setError("Error al obtener los datos del usuario.");
       }
+    };
+
+    fetchUserProfile();
+  }, [request]);
+
+  // Función para agregar una nueva preferencia
+  const handleAddTopic = async () => {
+    if (!userId) {
+      console.error("User ID is not available");
+      return;
+    }
+
+    if (newTopic.trim() === "") return;
+
+    try {
+      // Concatenar preferencias como un string separado por comas
+      const updatedPreferences = [...preferences, newTopic].join(", ");
+
+      console.log("Datos a enviar: ", { preferences: updatedPreferences });
+
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      };
+
+      const url = `${USER_UPDATE}${userId}/`; // URL dinámica para actualizar las preferencias del usuario
+
+      // Realizar la solicitud PATCH enviando las preferencias como un string concatenado
+      await axios.patch(url, { preferences: updatedPreferences }, config);
+
+      setPreferences(updatedPreferences.split(", ")); // Actualizar las preferencias en el estado local como un array
+      setShowPopup(true); // Mostrar popup de éxito
+      setTimeout(() => {
+        setShowPopup(false);
+      }, 3000);
 
       setNewTopic(""); // Limpiar el campo de entrada
+      console.log("Preferencia guardada con éxito");
+    } catch (err) {
+      console.error(
+        "Error al guardar la preferencia:",
+        err.response?.data || err.message
+      );
+      setError(err.response?.data || "Error al guardar la preferencia.");
     }
   };
 
+  // Función para eliminar una preferencia
+  const handleRemoveTopic = async (topic) => {
+    if (!userId) {
+      console.error("User ID is not available");
+      return;
+    }
+
+    try {
+      // Eliminar la preferencia y concatenar las preferencias restantes en un string
+      const updatedPreferences = preferences
+        .filter((pref) => pref !== topic)
+        .join(", ");
+
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      };
+
+      const url = `${USER_UPDATE}${userId}/`; // URL dinámica para actualizar las preferencias del usuario
+
+      // Realizar la solicitud PATCH enviando las preferencias como un string concatenado
+      await axios.patch(url, { preferences: updatedPreferences }, config);
+
+      setPreferences(updatedPreferences.split(", ")); // Actualizar preferencias en el estado local
+      console.log("Preferencia eliminada con éxito");
+    } catch (err) {
+      console.error(
+        "Error al eliminar la preferencia:",
+        err.response?.data || err.message
+      );
+      setError(err.response?.data || "Error al eliminar la preferencia.");
+    }
+  };
+
+  // Manejar la tecla Enter para añadir una preferencia
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      e.preventDefault(); // Evita que el formulario se envíe
+      e.preventDefault();
       handleAddTopic();
     }
   };
 
   const handleCancel = () => {
-    window.history.back(); // Navegar hacia atrás
+    navigate("/myaccount");
   };
 
   if (loading) {
     return <p>Loading...</p>;
   }
 
-  if (error) {
-    return <p>Error al cargar los datos del usuario: {error}</p>;
+  if (userError) {
+    return <p>Error al cargar los datos: {userError}</p>;
   }
 
   return (
@@ -78,7 +157,7 @@ const EditPreferences = () => {
             type="text"
             value={newTopic}
             onChange={(e) => setNewTopic(e.target.value)}
-            onKeyDown={handleKeyDown} // Captura la tecla "Enter"
+            onKeyDown={handleKeyDown}
             placeholder="Escriba un tema del que te guste hablar"
             style={{ maxWidth: "100%" }}
           />
@@ -92,6 +171,30 @@ const EditPreferences = () => {
             onClick={handleAddTopic}
           />
         </div>
+
+        {/* Lista de preferencias actuales */}
+        <div className="preferences-list">
+          <h3>Tus Preferencias</h3>
+          <ul>
+            {preferences.map((topic, index) => (
+              <li key={index}>
+                {topic}{" "}
+                <button
+                  onClick={() => handleRemoveTopic(topic)}
+                  className="remove-btn"
+                >
+                  eliminar
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {error && (
+          <p className="error">
+            {typeof error === "object" ? JSON.stringify(error) : error}
+          </p>
+        )}
       </div>
 
       <div className="cancel-button">
