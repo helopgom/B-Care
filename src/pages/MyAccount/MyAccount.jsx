@@ -56,6 +56,12 @@ const MyAccount = () => {
 
   const { name, birth_date, phone, preferences } = userProfile;
 
+  const preferencesArray = preferences ? preferences.split(", ") : [];
+
+  const maxPreferencesToShow = 2;
+  const displayedPreferences = preferencesArray.slice(0, maxPreferencesToShow);
+  const remainingPreferences = preferencesArray.length - maxPreferencesToShow;
+
   return (
     <div className="my-account-container">
       <div className="card-container">
@@ -64,9 +70,17 @@ const MyAccount = () => {
           <p>Fecha nacimiento: {birth_date}</p>
           <p>Teléfono: {phone}</p>
         </Card>
+
         <Card title="PREFERENCIAS" onIconClick={handleEditPreferences}>
-          {preferences?.length > 0 ? (
-            preferences.map((pref, index) => <p key={index}>{pref.name}</p>)
+          {preferencesArray.length > 0 ? (
+            <>
+              {displayedPreferences.map((pref, index) => (
+                <p key={index}>{pref}</p>
+              ))}
+              {remainingPreferences > 0 && (
+                <p>y {remainingPreferences} más...</p>
+              )}
+            </>
           ) : (
             <p>No preferences available</p>
           )}
