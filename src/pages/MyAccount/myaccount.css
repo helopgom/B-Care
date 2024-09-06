@@ -12,30 +12,19 @@ export default MyAccount;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2em;
-  padding-bottom: 80px; 
+  max-width: 100%;
 }
 
 .card-container {
   display: flex;
   flex-direction: column;
   gap: 1em;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  max-width: 600px; 
-  margin-bottom: 2em;
+  padding-top: 1em;
 }
 
 .back-button {
   margin-top: 2em;
-}
-
-@media (max-width: 768px) {
-  .my-account-content {
-    padding: 1em;
-    padding-bottom: 80px; 
-  }
-
-  .card-container {
-    width: 100%;
-  }
 }
