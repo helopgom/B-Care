@@ -6,6 +6,7 @@ import FormateForm from "../form/FormateForm";
 import "./signup.css";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -52,19 +53,18 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Convertir la fecha a formato yyyy-mm-dd usando Date
     const formattedBirthDate = new Date(formData.birth_date)
       .toISOString()
       .split("T")[0];
 
     const requestData = {
       ...formData,
-      birth_date: formattedBirthDate, // Aplicar el formato correcto
+      birth_date: formattedBirthDate,
     };
 
     try {
-      await request(requestData); // Enviar los datos corregidos
-      navigate("/");
+      await request(requestData);
+      navigate("/login");
     } catch (err) {
       console.error("Registration error:", err.response?.data || err.message);
     }
@@ -91,8 +91,8 @@ const SignUp = () => {
           <div className="form-group">
             <FormateForm
               label="Nombre"
-              id="first_name"
-              name="first_name"
+              id="name"
+              name="name"
               placeholder="Juan"
               pattern="^[A-Z][a-z]*$"
               required={true}
