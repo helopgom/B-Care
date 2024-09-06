@@ -7,15 +7,14 @@ import { userProfileEndpoint, USER_UPDATE } from "../../config/urls";
 import axios from "axios";
 
 const EditPreferences = () => {
-  const [newTopic, setNewTopic] = useState(""); // Nueva preferencia
-  const [preferences, setPreferences] = useState([]); // Lista de preferencias
-  const [userId, setUserId] = useState(null); // Estado para almacenar el ID del usuario
-  const [userProfile, setUserProfile] = useState(null); // Para manejar el perfil completo
+  const [newTopic, setNewTopic] = useState("");
+  const [preferences, setPreferences] = useState([]);
+  const [userId, setUserId] = useState(null);
+  const [userProfile, setUserProfile] = useState(null);
   const [error, setError] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
 
-  // Usar el hook useApi para obtener el perfil del usuario
   const {
     request,
     data,
@@ -30,14 +29,14 @@ const EditPreferences = () => {
     const fetchUserProfile = async () => {
       try {
         const response = await request();
-        const userProfileData = response.data[0]; // Obtener el primer objeto del array
+        const userProfileData = response.data[0];
         setUserProfile(userProfileData);
-        setUserId(userProfileData.id); // Guardar el ID del usuario en el estado
+        setUserId(userProfileData.id);
         setPreferences(
           userProfileData.preferences
             ? userProfileData.preferences.split(", ")
             : []
-        ); // Dividir las preferencias si vienen en string
+        );
       } catch (err) {
         console.error("Error al obtener los datos del usuario:", err);
         setError("Error al obtener los datos del usuario.");
@@ -47,20 +46,24 @@ const EditPreferences = () => {
     fetchUserProfile();
   }, [request]);
 
-  // Función para agregar una nueva preferencia
   const handleAddTopic = async () => {
     if (!userId) {
       console.error("User ID is not available");
       return;
     }
 
-    if (newTopic.trim() === "") return;
+    if (newTopic.trim() === "") {
+      setError("El tema no puede estar vacío.");
+      return;
+    }
+
+    if (preferences.includes(newTopic.trim())) {
+      setError("Este tema ya está en tus preferencias.");
+      return;
+    }
 
     try {
-      // Concatenar preferencias como un string separado por comas
-      const updatedPreferences = [...preferences, newTopic].join(", ");
-
-      console.log("Datos a enviar: ", { preferences: updatedPreferences });
+      const updatedPreferences = [...preferences, newTopic.trim()].join(", ");
 
       const token = localStorage.getItem("token");
       const config = {
@@ -69,18 +72,18 @@ const EditPreferences = () => {
         },
       };
 
-      const url = `${USER_UPDATE}${userId}/`; // URL dinámica para actualizar las preferencias del usuario
+      const url = `${USER_UPDATE}${userId}/`;
 
-      // Realizar la solicitud PATCH enviando las preferencias como un string concatenado
       await axios.patch(url, { preferences: updatedPreferences }, config);
 
-      setPreferences(updatedPreferences.split(", ")); // Actualizar las preferencias en el estado local como un array
-      setShowPopup(true); // Mostrar popup de éxito
+      setPreferences(updatedPreferences.split(", "));
+      setShowPopup(true);
       setTimeout(() => {
         setShowPopup(false);
       }, 3000);
 
-      setNewTopic(""); // Limpiar el campo de entrada
+      setNewTopic("");
+      setError(null);
       console.log("Preferencia guardada con éxito");
     } catch (err) {
       console.error(
@@ -91,7 +94,6 @@ const EditPreferences = () => {
     }
   };
 
-  // Función para eliminar una preferencia
   const handleRemoveTopic = async (topic) => {
     if (!userId) {
       console.error("User ID is not available");
@@ -99,10 +101,14 @@ const EditPreferences = () => {
     }
 
     try {
-      // Eliminar la preferencia y concatenar las preferencias restantes en un string
-      const updatedPreferences = preferences
-        .filter((pref) => pref !== topic)
-        .join(", ");
+      const updatedPreferencesArray = preferences.filter(
+        (pref) => pref !== topic
+      );
+
+      const updatedPreferences =
+        updatedPreferencesArray.length > 0
+          ? updatedPreferencesArray.join(", ")
+          : null;
 
       const token = localStorage.getItem("token");
       const config = {
@@ -111,12 +117,13 @@ const EditPreferences = () => {
         },
       };
 
-      const url = `${USER_UPDATE}${userId}/`; // URL dinámica para actualizar las preferencias del usuario
+      const url = `${USER_UPDATE}${userId}/`;
 
-      // Realizar la solicitud PATCH enviando las preferencias como un string concatenado
       await axios.patch(url, { preferences: updatedPreferences }, config);
 
-      setPreferences(updatedPreferences.split(", ")); // Actualizar preferencias en el estado local
+      setPreferences(
+        updatedPreferencesArray.length > 0 ? updatedPreferencesArray : []
+      );
       console.log("Preferencia eliminada con éxito");
     } catch (err) {
       console.error(
@@ -127,7 +134,6 @@ const EditPreferences = () => {
     }
   };
 
-  // Manejar la tecla Enter para añadir una preferencia
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -151,6 +157,26 @@ const EditPreferences = () => {
     <div className="edit-preferences-page">
       <div className="edit-preferences-container">
         <h2>Editar Preferencias</h2>
+        <div className="preferences-list">
+          <h3>Tus Preferencias</h3>
+          {preferences.length > 0 ? (
+            <ul>
+              {preferences.map((topic, index) => (
+                <li key={index}>
+                  {topic}{" "}
+                  <button
+                    onClick={() => handleRemoveTopic(topic)}
+                    className="remove-btn"
+                  >
+                    Eliminar
+                  </button>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No tienes preferencias guardadas.</p>
+          )}
+        </div>
         <div className="form-group">
           <label>Añade Temática</label>
           <input
@@ -170,24 +196,6 @@ const EditPreferences = () => {
             borderColor="var(--blue)"
             onClick={handleAddTopic}
           />
-        </div>
-
-        {/* Lista de preferencias actuales */}
-        <div className="preferences-list">
-          <h3>Tus Preferencias</h3>
-          <ul>
-            {preferences.map((topic, index) => (
-              <li key={index}>
-                {topic}{" "}
-                <button
-                  onClick={() => handleRemoveTopic(topic)}
-                  className="remove-btn"
-                >
-                  eliminar
-                </button>
-              </li>
-            ))}
-          </ul>
         </div>
 
         {error && (
