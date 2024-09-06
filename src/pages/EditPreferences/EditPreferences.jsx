@@ -168,7 +168,7 @@ const EditPreferences = () => {
                     onClick={() => handleRemoveTopic(topic)}
                     className="remove-btn"
                   >
-                    Eliminar
+                    ❌
                   </button>
                 </li>
               ))}

@@ -38,6 +38,12 @@
   display: flex;
   align-items: center;
 }
+.remove-btn {
+  border-color: var(--lightWhite);
+  background-color: var(--lightWhite);
+  border-bottom-color: #ffffff00;
+  border-right-color: rgb(0 0 0 / 0%);
+}
 
 .remove-topic-button {
   background-color: transparent;

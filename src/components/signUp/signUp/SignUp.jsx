@@ -166,15 +166,15 @@ const SignUp = () => {
 
           <div className="form-actions">
             <button type="submit" className="submit-btn">
-              Create User
+              CREAR USUARIO
             </button>
           </div>
         </form>
 
         <p className="login-link ">
-          You already have an account?{" "}
+          Ya tienes una cuenta?{" "}
           <a href="/login" className="text-secondary">
-            Login here
+            Inicia sesión
           </a>
         </p>
       </div>

@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import useApi from "../../services/useApi";
 import { USER_LOGIN } from "../../config/urls";
 import "./login.css";
-import Button from "../Button/Button";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -50,17 +49,23 @@ const Login = () => {
     }
     return <p>{error}</p>;
   };
+  const handleRegister = () => {
+    event.preventDefault();
+    navigate("/register");
+  };
 
   return (
     <div className="container">
       <div className="form-container">
         <div className="form-header">
-          <h2 className="Welcome">Welcome!</h2>
+          <img className="logo" src="public/assets/Logo.png" />
+          <h3 className="b-care">B-CARE</h3>
+          <p className="text-logo">Enjoyables conversations!</p>
         </div>
         <form className="form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="username" className="label">
-              Username
+              Usuario
             </label>
             <input
               id="username"
@@ -69,14 +74,14 @@ const Login = () => {
               value={formData.username}
               onChange={handleChange}
               required
-              aria-label="Enter your username"
+              aria-label="Ingresa tu usuario"
               className="input"
             />
           </div>
 
           <div className="form-group">
             <label htmlFor="password" className="label">
-              Password
+              Contraseña
             </label>
             <input
               id="password"
@@ -85,7 +90,7 @@ const Login = () => {
               value={formData.password}
               onChange={handleChange}
               required
-              aria-label="Enter your password"
+              aria-label="Ingresa tu contraseña"
               className="input"
             />
           </div>
@@ -96,23 +101,25 @@ const Login = () => {
             <button
               type="submit"
               className="submit-button"
-              aria-label="Sign in to your account"
+              aria-label="Inicia sesión"
             >
-              {loading ? "Signing in..." : "Sign in"}
+              {loading ? "Iniciado sesión..." : "INICIAR SESIÓN"}
             </button>
           </div>
         </form>
 
-        <p className="signup-text">
-          NUEVOS CLIENTES
-          <Link
-            to="/register"
-            className="signup-link"
-            aria-label="Sign up for a new account"
-          >
-            Registra
-          </Link>
+        <p className="signup-text">NUEVOS CLIENTES</p>
+        <p className="signup-low-text">
+          Si todavía no estás registrado, crea una cuenta con nosotros
         </p>
+        <button
+          type="submit"
+          className="new-account-button"
+          aria-label="Crea tu nueva cuenta"
+          onClick={handleRegister}
+        >
+          {loading ? "Creando nueva cuenta..." : "CREAR CUENTA"}
+        </button>
       </div>
     </div>
   );
