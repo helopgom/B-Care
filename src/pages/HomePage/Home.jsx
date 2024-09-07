@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./home.css";
 import InteractiveText from "../../components/InteractiveText/InteractiveText";
 import Button from "../../components/Button/Button";
@@ -21,44 +21,27 @@ const Home = () => {
     method: "GET",
   });
 
-  const apiKey =
-    "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"; // Reemplaza con tu API Key de OpenAI
-  const endpoint = "https://api.openai.com/v1/chat/completions";
-
+  // Función para enviar texto al backend (Django)
   async function enviarTexto(texto) {
-    const data = {
-      model: "gpt-3.5-turbo", // Cambia a gpt-3.5-turbo si no tienes acceso a gpt-4
-      messages: [{ role: "user", content: texto }],
-    };
-
     try {
-      const response = await fetch(
-        "https://api.openai.com/v1/chat/completions",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${apiKey}`, // Asegúrate de que la API Key se está interpolando correctamente
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
+      const response = await fetch("http://127.0.0.1:8000/conversation/", {
+        // URL corregida
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ user_text: texto }),
+      });
 
       if (!response.ok) {
-        // Manejo de errores HTTP
         const errorData = await response.json();
-        throw new Error(`Error ${response.status}: ${errorData.error.message}`);
+        throw new Error(`Error ${response.status}: ${errorData.error}`);
       }
 
       const result = await response.json();
-      if (result && result.choices && result.choices.length > 0) {
-        return result.choices[0].message.content;
-      } else {
-        throw new Error("No se encontraron respuestas en la API");
-      }
+      setResponseText(result.response);
     } catch (error) {
-      console.error(error.message);
-      throw error;
+      console.error("Error:", error.message);
     }
   }
 
@@ -84,9 +67,7 @@ const Home = () => {
     recognition.onresult = (event) => {
       const spokenText = event.results[0][0].transcript;
       setConversationText(spokenText);
-      enviarTexto(spokenText)
-        .then((response) => setResponseText(response))
-        .catch((err) => console.error(err));
+      enviarTexto(spokenText); // Enviar texto al backend
     };
 
     recognition.onspeechend = () => {
