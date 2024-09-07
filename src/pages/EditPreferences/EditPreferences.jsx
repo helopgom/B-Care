@@ -160,7 +160,7 @@ const EditPreferences = () => {
         <div className="preferences-list">
           <h3>Tus Preferencias</h3>
           {preferences.length > 0 ? (
-            <ul>
+            <ul className="preferences">
               {preferences.map((topic, index) => (
                 <li key={index}>
                   {topic}{" "}
@@ -174,7 +174,7 @@ const EditPreferences = () => {
               ))}
             </ul>
           ) : (
-            <p>No tienes preferencias guardadas.</p>
+            <p className="preferences">No tienes preferencias guardadas.</p>
           )}
         </div>
         <div className="form-group">

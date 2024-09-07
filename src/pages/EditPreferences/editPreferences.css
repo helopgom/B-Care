@@ -8,7 +8,12 @@
 .edit-preferences-page {
   padding: 1em;
 }
-
+.preferences {
+  height: 8em;
+  line-height: 1em;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
 .form-group {
   margin-bottom: 20px;
 }
