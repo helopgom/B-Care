@@ -22,16 +22,19 @@ const Home = () => {
   });
 
   // Función para enviar texto al backend (Django)
-  async function enviarTexto(texto) {
+  async function sendText(text) {
     try {
-      const response = await fetch("http://127.0.0.1:8000/conversation/", {
-        // URL corregida
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ user_text: texto }),
-      });
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/v1/conversation/",
+        {
+          // URL corregida
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ user_text: text }),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -39,13 +42,25 @@ const Home = () => {
       }
 
       const result = await response.json();
-      setResponseText(result.response);
+      speechSynthesis(result.response);
     } catch (error) {
       console.error("Error:", error.message);
     }
   }
+  function speechSynthesis(text) {
+    const SpeechSynthesis =
+      window.SpeechSynthesisUtterance || window.webkitSpeechSynthesisUtterance;
 
-  // Función para iniciar el reconocimiento de voz
+    if (!SpeechSynthesis) {
+      console.error("API de generación de voz no soportada en este navegador.");
+      return;
+    }
+    const synthesis = new SpeechSynthesis(text);
+    synthesis.lang = "es-ES";
+    synthesis.voice = window.speechSynthesis.getVoices()[0];
+    window.speechSynthesis.speak(synthesis);
+  }
+
   function startRecognition() {
     const SpeechRecognition =
       window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -67,7 +82,7 @@ const Home = () => {
     recognition.onresult = (event) => {
       const spokenText = event.results[0][0].transcript;
       setConversationText(spokenText);
-      enviarTexto(spokenText); // Enviar texto al backend
+      sendText(spokenText); // Enviar texto al backend
     };
 
     recognition.onspeechend = () => {
@@ -97,38 +112,36 @@ const Home = () => {
   if (userError) {
     return <p>Error: {userError}</p>;
   }
+  const IsNotTalking = () => (
+    <div className="button-container">
+      <Button
+        text="MI CUENTA"
+        backgroundColor="var(--white)"
+        textColor="var(--black)"
+        borderColor="var(--black)"
+        link="/MyAccount"
+      />
+    </div>
+  );
+  const IsTalking = () => (
+    <div className="finish-button-container">
+      <Button
+        text="FINALIZAR"
+        backgroundColor="var(--black)"
+        textColor="var(--white)"
+        borderColor="var(--black)"
+        link="#"
+        onClick={handleFinish}
+      />
+    </div>
+  );
 
   return (
     <div className="home-container">
       <InteractiveText name={userProfile?.first_name} isTalking={isTalking} />
       <ButtonWithIcon isTalking={isTalking} setIsTalking={handleStartTalking} />
 
-      {!isTalking && (
-        <div className="button-container">
-          <Button
-            text="MI CUENTA"
-            backgroundColor="var(--white)"
-            textColor="var(--black)"
-            borderColor="var(--black)"
-            link="/MyAccount"
-          />
-        </div>
-      )}
-
-      {isTalking && (
-        <div className="finish-button-container">
-          <Button
-            text="FINALIZAR"
-            backgroundColor="var(--black)"
-            textColor="var(--white)"
-            borderColor="var(--black)"
-            link="#"
-            onClick={handleFinish}
-          />
-          <p>Texto hablado: {conversationText}</p>
-          <p>Respuesta de la IA: {responseText}</p>
-        </div>
-      )}
+      {isTalking ? <IsTalking /> : <IsNotTalking />}
     </div>
   );
 };
