@@ -67,6 +67,9 @@
   margin-top: 20px;
   max-width: 100%;
 }
+.cancel-button {
+  margin-top: 3em;
+}
 .popup {
   position: fixed;
   top: 50%;

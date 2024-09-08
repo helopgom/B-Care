@@ -31,7 +31,7 @@ const MyAccount = () => {
   }, [request]);
 
   const handleBack = () => {
-    navigate("/");
+    navigate("/home");
   };
 
   const handleEditPersonalData = () => {

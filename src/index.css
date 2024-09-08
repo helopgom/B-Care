@@ -26,7 +26,8 @@ html {
   justify-content: center;
   align-items: center;
   bottom: 0;
-  height: 15vh;
+  height: 10vh;
   width: 100%;
   border-top: var(--lilac) solid 5px;
+  padding-top: 0.5em;
 }

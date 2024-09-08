@@ -3,7 +3,7 @@ import Footer from "../components/Footer/Footer";
 import { useLocation } from "react-router-dom";
 const Layout = () => {
   const { pathname } = useLocation();
-  const shouldHideEmergency = ["/login", "/register"].includes(pathname);
+  const shouldHideEmergency = ["/", "/register"].includes(pathname);
 
   return (
     <div className="page-container">

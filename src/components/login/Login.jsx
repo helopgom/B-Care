@@ -30,7 +30,7 @@ const Login = () => {
       const response = await request(formData);
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("username", formData.username);
-      navigate("/");
+      navigate("/home");
     } catch (err) {
       console.error("Login error:", err);
     }
@@ -118,7 +118,7 @@ const Login = () => {
           aria-label="Crea tu nueva cuenta"
           onClick={handleRegister}
         >
-          {loading ? "Creando nueva cuenta..." : "CREAR CUENTA"}
+          {loading ? "CREAR CUENTA" : "CREAR CUENTA"}
         </button>
       </div>
     </div>
