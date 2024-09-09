@@ -5,25 +5,40 @@ import { userProfileEndpoint } from "../../config/urls";
 
 function InteractiveText({ isTalking }) {
   const [name, setName] = useState("");
-  const { request, data, error, loading } = useApi({
+  const [showFinalMessage, setShowFinalMessage] = useState(false);
+  const [hasTalked, setHasTalked] = useState(false);
+
+  const { request, loading, error } = useApi({
     apiEndpoint: userProfileEndpoint,
     method: "GET",
   });
 
-  useEffect(() => {
-    const fetchUserProfile = async () => {
-      try {
-        const response = await request();
+  const fetchUserProfile = async () => {
+    try {
+      const response = await request();
+      if (response && response.data && response.data.length > 0) {
         const userName = response.data[0].name;
         setName(userName);
         localStorage.setItem("name", userName);
-      } catch (err) {
-        console.error("Error fetching user profile:", err);
       }
-    };
+    } catch (err) {
+      console.error("Error fetching user profile:", err);
+    }
+  };
 
+  useEffect(() => {
     fetchUserProfile();
-  }, [request]);
+  }, []);
+
+  useEffect(() => {
+    if (isTalking) {
+      setHasTalked(true);
+    }
+
+    if (!isTalking && hasTalked) {
+      setShowFinalMessage(true);
+    }
+  }, [isTalking, hasTalked]);
 
   return (
     <div className="text-container">
@@ -33,6 +48,8 @@ function InteractiveText({ isTalking }) {
         <p>Cargando...</p>
       ) : error ? (
         <p>Error al cargar el perfil del usuario.</p>
+      ) : showFinalMessage ? (
+        <p>¿Te apetece hablar de otra cosa?</p>
       ) : (
         <>
           {name && <p>¡Hola, {name}!</p>}
