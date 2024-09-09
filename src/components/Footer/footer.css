@@ -2,6 +2,7 @@
   color: var(--lilac);
   border: 0.1em solid;
   width: 100%;
+  margin: 0;
 }
 
 #emergency {

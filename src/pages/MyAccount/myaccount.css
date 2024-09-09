@@ -1,4 +1,11 @@
-.my-account-container {
+.my-account-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.my-account-content {
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,6 +21,7 @@
   width: 100%;
   padding-top: 1em;
 }
+
 .back-button {
   margin-top: 7.4em;
 }
