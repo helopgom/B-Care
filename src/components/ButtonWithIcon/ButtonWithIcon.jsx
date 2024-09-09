@@ -1,23 +1,21 @@
 import React from "react";
 import "./buttonWithIcon.css";
 
-const ButtonWithIcon = ({ isTalking, setIsTalking }) => {
-  const handleClick = () => {
-    setIsTalking(!isTalking);
-  };
-
+const ButtonWithIcon = ({ isRecording, onClick }) => {
   return (
     <div className="button-with-icon-container">
-      <button onClick={handleClick} className="icon-button">
+      <button onClick={onClick} className="icon-button">
         <div
-          className={`icon-container ${isTalking ? "talking" : "not-talking"}`}
+          className={`icon-container ${
+            isRecording ? "talking" : "not-talking"
+          }`}
         >
           <img
             src="public/assets/microphoneIcon.svg"
             alt="icon"
             className="icon-image"
           />
-          {isTalking && (
+          {isRecording && (
             <>
               <div className="circle circle1"></div>
               <div className="circle circle2"></div>
