@@ -1,6 +1,5 @@
 .edit-personal-data-page {
   padding: 2em;
-  display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
@@ -19,6 +18,12 @@
 
 .form-group label {
   display: block;
+}
+.save-button-personal-data {
+  margin-top: 2.1em;
+}
+.cancel-button-personal-data {
+  margin-top: 2em;
 }
 
 .form-group input {

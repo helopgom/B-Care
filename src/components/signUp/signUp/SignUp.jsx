@@ -173,7 +173,7 @@ const SignUp = () => {
 
         <p className="login-link ">
           Ya tienes una cuenta?{" "}
-          <a href="/login" className="text-secondary">
+          <a href="/" className="text-secondary">
             Inicia sesión
           </a>
         </p>

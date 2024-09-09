@@ -131,7 +131,7 @@ const EditPersonalData = () => {
               onChange={(e) => setPhone(e.target.value)}
             />
           </div>
-          <div className="save-button">
+          <div className="save-button-personal-data">
             <Button
               text="Guardar"
               backgroundColor="var(--black)"
@@ -143,7 +143,7 @@ const EditPersonalData = () => {
           {error && <p className="error">{error}</p>}
         </form>
       </div>
-      <div className="cancel-button">
+      <div className="cancel-button-personal-data">
         <Button
           text="Cancelar"
           backgroundColor="var(--white)"
