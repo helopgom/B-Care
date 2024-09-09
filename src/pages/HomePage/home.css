@@ -2,25 +2,20 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  padding-bottom: 10px;
-}
-
-.text-container {
-  padding: 1em;
-  padding-top: 0.1em;
 }
 
 .button-container {
   display: flex;
   justify-content: center;
   width: 100%;
+  margin-top: 3.8em;
 }
 
 .finish-button-container {
   display: flex;
   justify-content: center;
   width: 100%;
-  margin-top: 8.5em;
+  margin-top: 4em;
 }
 
 /* Para iPad Mini en orientación vertical */
