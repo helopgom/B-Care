@@ -8,14 +8,14 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  margin-top: 3.8em;
+  margin-top: 3.5em;
 }
 
 .finish-button-container {
   display: flex;
   justify-content: center;
   width: 100%;
-  margin-top: 4em;
+  margin-top: 3.5em;
 }
 
 /* Para iPad Mini en orientación vertical */
@@ -31,5 +31,11 @@
   }
   .text-container {
     margin-bottom: 2em;
+  }
+  .button-container {
+    margin-top: 3.8em;
+  }
+  .icon-container.talking {
+    margin-top: 6em;
   }
 }

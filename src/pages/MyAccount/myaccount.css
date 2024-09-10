@@ -18,3 +18,9 @@
 .back-button {
   margin-top: 7.7em;
 }
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  .back-button {
+    margin-top: 6.7em;
+  }
+}

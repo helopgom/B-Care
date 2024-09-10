@@ -116,7 +116,7 @@ const Home = () => {
         backgroundColor="var(--black)"
         textColor="var(--white)"
         borderColor="var(--black)"
-        link="#"
+        link="/home"
         onClick={handleFinish}
       />
     </div>
