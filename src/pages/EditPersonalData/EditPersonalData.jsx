@@ -119,6 +119,7 @@ const EditPersonalData = () => {
             <label>Fecha de Nacimiento</label>
             <input
               type="date"
+              className="date"
               value={birthDate}
               onChange={(e) => setBirthDate(e.target.value)}
             />
