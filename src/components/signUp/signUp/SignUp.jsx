@@ -64,7 +64,7 @@ const SignUp = () => {
 
     try {
       await request(requestData);
-      navigate("/login");
+      navigate("/");
     } catch (err) {
       console.error("Registration error:", err.response?.data || err.message);
     }
