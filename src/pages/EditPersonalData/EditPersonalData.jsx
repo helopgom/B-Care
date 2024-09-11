@@ -107,8 +107,9 @@ const EditPersonalData = () => {
         <h2>Editar Datos Personales</h2>
         <form>
           <div className="form-group">
-            <label>Nombre</label>
+            <label htmlFor="name-input">Nombre</label>
             <input
+              id="name-input"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}

@@ -39,7 +39,7 @@ defineFeature(feature, (test) => {
   test("User clicks the button with a link", ({ given, when, then }) => {
     given("the button is rendered with a link", () => {
       delete window.location;
-      window.location = { href: "" }; // Mock window.location for the test
+      window.location = { href: "" };
       render(
         <Button
           text="Go to Google"

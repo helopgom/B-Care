@@ -19,7 +19,7 @@ jest.mock("react-router-dom", () => ({
 
 jest.mock("../../services/useApi");
 
-describe.only("Login Component", () => {
+describe("Login Component", () => {
   const mockRequest = jest.fn();
   const mockNavigate = jest.fn();
 
@@ -42,10 +42,9 @@ describe.only("Login Component", () => {
     expect(screen.getByLabelText(/ingresa tu usuario/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/ingresa tu contraseña/i)).toBeInTheDocument();
 
-    // Cambiado para el botón usando aria-label
     expect(
       screen.getByRole("button", { name: /inicia sesión/i })
-    ).toBeInTheDocument(); // El botón "Iniciar sesión"
+    ).toBeInTheDocument();
   });
 
   it("should update input values on change", () => {
@@ -75,11 +74,11 @@ describe.only("Login Component", () => {
     );
 
     await act(async () => {
-      const usernameInput = screen.getByLabelText(/ingresa tu usuario/i); // Para inputs
-      const passwordInput = screen.getByLabelText(/ingresa tu contraseña/i); // Para inputs
+      const usernameInput = screen.getByLabelText(/ingresa tu usuario/i);
+      const passwordInput = screen.getByLabelText(/ingresa tu contraseña/i);
       const submitButton = screen.getByRole("button", {
         name: /inicia sesión/i,
-      }); // Usar getByRole para el botón
+      });
 
       fireEvent.change(usernameInput, { target: { value: "testuser" } });
       fireEvent.change(passwordInput, { target: { value: "password123" } });
