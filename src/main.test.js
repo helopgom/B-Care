@@ -2,7 +2,7 @@ import { loadFeature, defineFeature } from "jest-cucumber";
 import React from "react";
 import { RouterProvider } from "react-router-dom";
 import { render, screen } from "@testing-library/react";
-import { router } from "../router/router";
+import { router } from "./router/router";
 import "@testing-library/jest-dom";
 
 const feature = loadFeature(__dirname + "/Main.feature");

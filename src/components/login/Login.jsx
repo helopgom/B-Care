@@ -49,7 +49,7 @@ const Login = () => {
     }
     return <p>{error}</p>;
   };
-  const handleRegister = () => {
+  const handleRegister = (event) => {
     event.preventDefault();
     navigate("/register");
   };
@@ -118,7 +118,7 @@ const Login = () => {
           aria-label="Crea tu nueva cuenta"
           onClick={handleRegister}
         >
-          {loading ? "CREAR CUENTA" : "CREAR CUENTA"}
+          CREAR CUENTA
         </button>
       </div>
     </div>
