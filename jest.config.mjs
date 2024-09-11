@@ -173,6 +173,14 @@ const config = {
 
   // This option allows use of a custom test runner
   // testRunner: "jest-circus/runner",
+  collectCoverage: true,
+  collectCoverageFrom: [
+    "src/**/*.{js,jsx}",
+    "!src/**/*.test.{js,jsx}",
+    "!src/serviceWorker.js",
+  ],
+  coverageDirectory: "coverage",
+  coverageReporters: ["html", "text"],
 
   // A map from regular expressions to paths to transformers
   // transform: undefined,

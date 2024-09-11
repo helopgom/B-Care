@@ -14,7 +14,6 @@ import axios from "axios";
 import useApi from "../../services/useApi";
 import "@testing-library/jest-dom";
 
-// Mock de axios y useApi
 jest.mock("axios");
 jest.mock("../../services/useApi");
 
@@ -71,7 +70,6 @@ defineFeature(feature, (test) => {
       });
 
       await act(async () => {
-        // Simula la respuesta del servidor
         await axios.patch();
       });
     });
@@ -112,7 +110,6 @@ defineFeature(feature, (test) => {
       });
 
       await act(async () => {
-        // Simula la respuesta del servidor
         await axios.patch();
       });
     });

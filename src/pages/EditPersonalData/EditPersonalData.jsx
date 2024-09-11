@@ -10,13 +10,12 @@ const EditPersonalData = () => {
   const [name, setName] = useState("");
   const [birthDate, setBirthDate] = useState("");
   const [phone, setPhone] = useState("");
-  const [userId, setUserId] = useState(null); // Estado para almacenar el ID del usuario
-  const [userProfile, setUserProfile] = useState(null); // Para manejar el perfil completo
+  const [userId, setUserId] = useState(null);
+  const [userProfile, setUserProfile] = useState(null);
   const [error, setError] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
 
-  // Usar el hook useApi para obtener el perfil del usuario
   const {
     request,
     data,
@@ -31,9 +30,9 @@ const EditPersonalData = () => {
     const fetchUserProfile = async () => {
       try {
         const response = await request();
-        const userProfileData = response.data[0]; // Obtener el primer objeto del array
+        const userProfileData = response.data[0];
         setUserProfile(userProfileData);
-        setUserId(userProfileData.id); // Guardar el ID del usuario en el estado
+        setUserId(userProfileData.id);
         setName(userProfileData.name || "");
         setBirthDate(userProfileData.birth_date || "");
         setPhone(userProfileData.phone || "");
