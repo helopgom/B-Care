@@ -1,0 +1,121 @@
+.button-with-icon-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2.3em;
+}
+
+.icon-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.icon-container {
+  position: relative;
+  width: 20em;
+  height: 20em;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.not-talking {
+  background-color: var(--black);
+}
+
+.talking {
+  background-color: transparent;
+}
+
+.icon-image {
+  width: 10em;
+  height: 10em;
+  display: block;
+  border-radius: 50%;
+  position: relative;
+  z-index: 10;
+  filter: invert(100%);
+}
+
+.talking .icon-image {
+  filter: invert(0%);
+}
+
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  z-index: 5;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.circle1 {
+  width: 160px;
+  height: 160px;
+  background-color: #d9d9d9;
+  opacity: 1;
+}
+
+.circle2 {
+  width: 200px;
+  height: 200px;
+  background-color: #d9d9d9;
+  opacity: 0.51;
+  animation-delay: 0.5s;
+}
+
+.circle3 {
+  width: 220px;
+  height: 220px;
+  background-color: #f8f8f8;
+  opacity: 1;
+  animation-delay: 1s;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  .not-talking {
+    background-color: var(--black);
+    width: 350px;
+    height: 350px;
+  }
+
+  .circle1 {
+    width: 250px;
+    height: 250px;
+    background-color: #d9d9d9;
+    opacity: 1;
+  }
+
+  .circle2 {
+    width: 280px;
+    height: 280px;
+    background-color: #d9d9d9;
+    opacity: 0.51;
+    animation-delay: 0.5s;
+  }
+
+  .circle3 {
+    width: 300px;
+    height: 300px;
+    background-color: #f8f8f8;
+    opacity: 1;
+    animation-delay: 1s;
+  }
+}

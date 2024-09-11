@@ -1,0 +1,93 @@
+.edit-preferences-container {
+  background-color: var(--lightWhite);
+  padding: 1em;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.edit-preferences-page {
+  padding: 1em;
+}
+.preferences {
+  height: 8em;
+  line-height: 1em;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group input {
+  width: 90%;
+  padding: 10px;
+  margin-top: 8px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+}
+
+.selected-topics {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px inset #ccc;
+  border-radius: 5px;
+  width: 95%;
+  background-color: var(--white);
+}
+
+.topic-item {
+  background-color: var(--light-gray);
+  padding: 5px 10px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+}
+.remove-btn {
+  border-color: var(--lightWhite);
+  background-color: var(--lightWhite);
+  border-bottom-color: #ffffff00;
+  border-right-color: rgb(0 0 0 / 0%);
+}
+
+.remove-topic-button {
+  background-color: transparent;
+  border: none;
+  color: var(--red);
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.save-button,
+.cancel-button {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+
+  max-width: 100%;
+}
+.save-button {
+  margin-top: 2.4em;
+}
+.cancel-button {
+  margin-top: 2.4em;
+}
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #4caf50;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  .cancel-button {
+    margin-top: 13em;
+  }
+}
