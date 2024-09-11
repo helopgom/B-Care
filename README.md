@@ -45,13 +45,14 @@ This project was developed by a one developer using SCRUM. Tools like Jira were 
 
 ## 🛠 Technologies Used
 
-- **Language**: Python (v3.12.4)
-- **Database**: PostgreSQL (v16.2)
+- **Languaje**: JavaScript
+- **Frameworks**: Jest-Cucumber
+- **Pre-processors**: SASS
 - **Testing**: Jest (v29.7)
 - **Version Control**: Git (v2.45.2) with GitFlow
+- **Javascript Libraries**: React.js (9.7.4), Axios (1.7.7), 
 - **Agile Methodologies**: SCRUM
 - **IDE**: Visual Studio Code
-- **Frameworks**: React
 - **Design Tool**: Figma
 
 ## 📦 Installation and Configuration
