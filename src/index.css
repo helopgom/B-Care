@@ -1,0 +1,34 @@
+:root {
+  --white: #ffffff;
+  --lightGrey: #d1e5f3;
+  --lightWhite: #f8f8f8;
+  --red: #d54e5d;
+  --lightRed: #e04f5f;
+  --black: #000000;
+  --lilac: #e8def8;
+  --pink: #ea0c6b;
+  --electricBlue: #2b97f2;
+}
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-family: "Raleway", sans-serif;
+}
+
+.page-container {
+  position: relative;
+  min-height: 100vh;
+  flex-direction: column;
+}
+.footer {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 0;
+  height: 10vh;
+  width: 100%;
+  border-top: var(--lilac) solid 5px;
+  padding-top: 0.5em;
+}
