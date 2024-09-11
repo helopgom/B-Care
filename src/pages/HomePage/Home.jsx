@@ -1,59 +1,137 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./home.css";
 import InteractiveText from "../../components/InteractiveText/InteractiveText";
 import Button from "../../components/Button/Button";
-import Footer from "../../components/Footer/Footer";
 import ButtonWithIcon from "../../components/ButtonWithIcon/ButtonWithIcon";
+import UseApi from "../../services/useApi";
+import { userProfileEndpoint } from "../../config/urls";
+import axios from "axios";
 
 const Home = () => {
-  const [name, setName] = useState("");
   const [isTalking, setIsTalking] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
 
-  useEffect(() => {
-    const fetchName = async () => {
-      const fetchedName = "Juan"; // Simulación de obtención de nombre
-      setName(fetchedName);
+  const {
+    data: userProfile,
+    loading: userLoading,
+    error: userError,
+  } = UseApi({
+    apiEndpoint: userProfileEndpoint,
+    method: "GET",
+  });
+
+  async function sendText(text) {
+    try {
+      const response = await axios.request({
+        method: "post",
+        url: "http://127.0.0.1:8000/api/v1/conversation/",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${localStorage.getItem("token")}`,
+        },
+        data: JSON.stringify({ user_text: text }),
+      });
+
+      speechSynthesis(response.data.response);
+    } catch (error) {
+      console.error("Error:", error.message);
+    }
+  }
+  function speechSynthesis(text) {
+    const SpeechSynthesis =
+      window.SpeechSynthesisUtterance || window.webkitSpeechSynthesisUtterance;
+
+    if (!SpeechSynthesis) {
+      console.error("API de generación de voz no soportada en este navegador.");
+      return;
+    }
+    const synthesis = new SpeechSynthesis(text);
+    synthesis.lang = "es-ES";
+    synthesis.voice = window.speechSynthesis.getVoices()[0];
+    window.speechSynthesis.speak(synthesis);
+  }
+
+  function startRecognition() {
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+      console.error(
+        "API de reconocimiento de voz no soportada en este navegador."
+      );
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = "es-ES";
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.start();
+    setIsRecording(true);
+    setIsTalking(true);
+
+    recognition.onresult = (event) => {
+      const spokenText = event.results[0][0].transcript;
+      sendText(spokenText);
     };
 
-    fetchName();
-  }, []);
+    recognition.onspeechend = () => {
+      recognition.stop();
+      setIsRecording(false);
+    };
 
-  const handleFinish = () => {
-    setIsTalking(false);
-  };
+    recognition.onerror = (event) => {
+      console.error(event.error);
+      setIsRecording(false);
+    };
+  }
+
+  const handleFinish = () => setIsTalking(false);
+
+  if (userLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (userError) {
+    return <p>Error: {userError}</p>;
+  }
+
+  const IsNotTalking = () => (
+    <div className="button-container">
+      <Button
+        text="MI CUENTA"
+        backgroundColor="var(--white)"
+        textColor="var(--black)"
+        borderColor="var(--black)"
+        link="/MyAccount"
+      />
+    </div>
+  );
+  const IsTalking = () => (
+    <div className="finish-button-container">
+      <Button
+        text="FINALIZAR"
+        backgroundColor="var(--black)"
+        textColor="var(--white)"
+        borderColor="var(--black)"
+        link="/home"
+        onClick={handleFinish}
+      />
+    </div>
+  );
 
   return (
     <div className="home-container">
-      <InteractiveText name={name} isTalking={isTalking} />
-      <ButtonWithIcon isTalking={isTalking} setIsTalking={setIsTalking} />
+      <InteractiveText name={userProfile?.first_name} isTalking={isTalking} />
+      <ButtonWithIcon
+        isRecording={isRecording}
+        onClick={startRecognition}
+        className="micro-button"
+        aria-label="micro"
+      />
 
-      {!isTalking && (
-        <div className="button-container">
-          <Button
-            text="MI CUENTA"
-            backgroundColor="var(--white)"
-            textColor="var(--black)"
-            borderColor="var(--black)"
-            link="/MyAccount"
-          />
-        </div>
-      )}
-
-      {isTalking && (
-        <div className="finish-button-container">
-          <Button
-            text="FINALIZAR"
-            backgroundColor="var(--black)"
-            textColor="var(--white)"
-            borderColor="var(--black)"
-            link="#"
-            onClick={handleFinish}
-          />
-        </div>
-      )}
-      <div>
-        <Footer />
-      </div>
+      {isTalking ? <IsTalking /> : <IsNotTalking />}
     </div>
   );
 };

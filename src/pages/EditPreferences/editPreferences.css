@@ -3,10 +3,19 @@
   padding: 1em;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin: 1em;
-  margin-top: 3em;
 }
 
+.edit-preferences-page {
+  padding: 1em;
+}
+.preferences {
+  height: 8em;
+  line-height: 1em;
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  border-radius: 1em;
+}
 .form-group {
   margin-bottom: 20px;
 }
@@ -15,7 +24,7 @@
   width: 90%;
   padding: 10px;
   margin-top: 8px;
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
   border-radius: 5px;
 }
 
@@ -23,7 +32,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  border: 1px solid #ccc;
+  border: 1px inset #ccc;
   border-radius: 5px;
   width: 95%;
   background-color: var(--white);
@@ -35,6 +44,12 @@
   border-radius: 10px;
   display: flex;
   align-items: center;
+}
+.remove-btn {
+  border-color: var(--lightWhite);
+  background-color: var(--lightWhite);
+  border-bottom-color: #ffffff00;
+  border-right-color: rgb(0 0 0 / 0%);
 }
 
 .remove-topic-button {
@@ -51,8 +66,14 @@
   display: flex;
   justify-content: center;
   gap: 20px;
-  margin-top: 20px;
+
   max-width: 100%;
+}
+.save-button {
+  margin-top: 2.4em;
+}
+.cancel-button {
+  margin-top: 2.4em;
 }
 .popup {
   position: fixed;
@@ -66,6 +87,9 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 1000;
 }
-.footer {
-  margin-top: 10%;
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  .cancel-button {
+    margin-top: 13em;
+  }
 }

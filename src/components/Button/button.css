@@ -3,8 +3,17 @@
   margin-top: 1em;
   margin-bottom: 1em;
   width: 300px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
 }
 
 .custom-button:hover {
   opacity: 0.9;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  .custom-button {
+    width: 400px;
+    height: 70px;
+  }
 }

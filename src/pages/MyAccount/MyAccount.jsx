@@ -1,43 +1,42 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./myAccount.css";
 import Card from "../../components/Card/Card";
 import Button from "../../components/Button/Button";
 import { useNavigate } from "react-router-dom";
-import Footer from "../../components/Footer/Footer";
+import useApi from "../../services/useApi";
+import { userProfileEndpoint } from "../../config/urls";
 
 const MyAccount = () => {
-  const [userData, setUserData] = useState({});
-  const [preferences, setPreferences] = useState({});
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const [userProfile, setUserProfile] = useState(null);
+  const { request, data, error, loading } = useApi({
+    apiEndpoint: userProfileEndpoint,
+    method: "GET",
+  });
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchUserProfile = async () => {
       try {
-        const userResponse = await fetch("/api/user");
-        const userData = await userResponse.json();
-        setUserData(userData);
-
-        const prefsResponse = await fetch("/api/preferences");
-        const preferences = await prefsResponse.json();
-        setPreferences(preferences);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
+        const response = await request();
+        const userProfileData = response?.data?.[0]; // Añadir verificación segura
+        if (userProfileData) {
+          console.log(JSON.stringify(userProfileData));
+          setUserProfile(userProfileData);
+          localStorage.setItem("name", userProfileData.name);
+        } else {
+          console.error("No user profile data found.");
+        }
+      } catch (err) {
+        console.error("Error fetching user profile:", err);
       }
     };
 
-    fetchData();
-  }, []);
+    fetchUserProfile();
+  }, [request]);
 
   const handleBack = () => {
-    navigate("/");
+    navigate("/home");
   };
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
 
   const handleEditPersonalData = () => {
     navigate("/editPersonalData");
@@ -47,20 +46,51 @@ const MyAccount = () => {
     navigate("/editPreferences");
   };
 
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
+
+  if (!userProfile) {
+    return <p>No user profile found</p>;
+  }
+
+  const { name, birth_date, phone, preferences } = userProfile;
+
+  const preferencesArray = preferences ? preferences.split(", ") : [];
+
+  const maxPreferencesToShow = 2;
+  const displayedPreferences = preferencesArray.slice(0, maxPreferencesToShow);
+  const remainingPreferences = preferencesArray.length - maxPreferencesToShow;
+
   return (
     <div className="my-account-container">
       <div className="card-container">
-        <Card
-          title="MIS DATOS"
-          content={userData}
-          onIconClick={handleEditPersonalData}
-        />
-        <Card
-          title="PREFERENCIAS"
-          content={preferences}
-          onIconClick={handleEditPreferences}
-        />
+        <Card title="MIS DATOS" onIconClick={handleEditPersonalData}>
+          <p>Nombre: {name}</p>
+          <p>Fecha nacimiento: {birth_date}</p>
+          <p>Teléfono: {phone}</p>
+        </Card>
+
+        <Card title="PREFERENCIAS" onIconClick={handleEditPreferences}>
+          {preferencesArray.length > 0 ? (
+            <>
+              {displayedPreferences.map((pref, index) => (
+                <p key={index}>{pref}</p>
+              ))}
+              {remainingPreferences > 0 && (
+                <p>y {remainingPreferences} más...</p>
+              )}
+            </>
+          ) : (
+            <p>No preferences available</p>
+          )}
+        </Card>
       </div>
+
       <div className="back-button">
         <Button
           text="VOLVER"
@@ -69,9 +99,6 @@ const MyAccount = () => {
           borderColor="var(--black)"
           onClick={handleBack}
         />
-      </div>
-      <div className="footer">
-        <Footer />
       </div>
     </div>
   );

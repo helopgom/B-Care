@@ -6,20 +6,29 @@
   --lightRed: #e04f5f;
   --black: #000000;
   --lilac: #e8def8;
+  --pink: #ea0c6b;
+  --electricBlue: #2b97f2;
 }
 body,
 html {
-  height: 100%;
   margin: 0;
   padding: 0;
+  font-family: "Raleway", sans-serif;
 }
 
 .page-container {
-  display: flex;
-  flex-direction: column;
+  position: relative;
   min-height: 100vh;
+  flex-direction: column;
 }
-
-.content {
-  flex: 1;
+.footer {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 0;
+  height: 10vh;
+  width: 100%;
+  border-top: var(--lilac) solid 5px;
+  padding-top: 0.5em;
 }

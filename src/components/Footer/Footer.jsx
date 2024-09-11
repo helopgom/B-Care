@@ -1,5 +1,5 @@
 import React from "react";
-import "./footer.css";
+import "./footer.scss";
 import Button from "../Button/Button";
 
 const Footer = () => {
@@ -8,17 +8,14 @@ const Footer = () => {
   };
 
   return (
-    <div className="footer-container">
-      <hr id="separator" />
-      <div id="emergency">
-        <Button
-          text="EMERGENCIA"
-          backgroundColor="var(--lightRed)"
-          textColor="var(--white)"
-          borderColor="var(--red)"
-          onClick={handleEmergencyClick}
-        />
-      </div>
+    <div className="footer">
+      <Button
+        text="EMERGENCIA"
+        backgroundColor="var(--lightRed)"
+        textColor="var(--white)"
+        borderColor="var(--red)"
+        onClick={handleEmergencyClick}
+      />
     </div>
   );
 };
