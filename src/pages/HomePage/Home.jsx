@@ -20,7 +20,6 @@ const Home = () => {
     method: "GET",
   });
 
-  // Función para enviar texto al backend (Django)
   async function sendText(text) {
     try {
       const response = await axios.request({
@@ -64,7 +63,7 @@ const Home = () => {
     }
 
     const recognition = new SpeechRecognition();
-    recognition.lang = "es-ES"; // Puedes ajustar el idioma
+    recognition.lang = "es-ES";
     recognition.interimResults = false;
     recognition.maxAlternatives = 1;
 
@@ -74,17 +73,17 @@ const Home = () => {
 
     recognition.onresult = (event) => {
       const spokenText = event.results[0][0].transcript;
-      sendText(spokenText); // Enviar texto al backend
+      sendText(spokenText);
     };
 
     recognition.onspeechend = () => {
       recognition.stop();
-      setIsRecording(false); // Detener la indicación de que está hablando
+      setIsRecording(false);
     };
 
     recognition.onerror = (event) => {
       console.error(event.error);
-      setIsRecording(false); // Detener en caso de error
+      setIsRecording(false);
     };
   }
 
@@ -125,7 +124,12 @@ const Home = () => {
   return (
     <div className="home-container">
       <InteractiveText name={userProfile?.first_name} isTalking={isTalking} />
-      <ButtonWithIcon isRecording={isRecording} onClick={startRecognition} />
+      <ButtonWithIcon
+        isRecording={isRecording}
+        onClick={startRecognition}
+        className="micro-button"
+        aria-label="micro"
+      />
 
       {isTalking ? <IsTalking /> : <IsNotTalking />}
     </div>

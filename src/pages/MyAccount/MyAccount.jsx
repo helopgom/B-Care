@@ -8,7 +8,7 @@ import { userProfileEndpoint } from "../../config/urls";
 
 const MyAccount = () => {
   const navigate = useNavigate();
-  const [userProfile, setUserProfile] = useState(null); // Estado para el perfil completo
+  const [userProfile, setUserProfile] = useState(null);
   const { request, data, error, loading } = useApi({
     apiEndpoint: userProfileEndpoint,
     method: "GET",
@@ -18,10 +18,14 @@ const MyAccount = () => {
     const fetchUserProfile = async () => {
       try {
         const response = await request();
-        const userProfileData = response.data[0];
-        console.log(JSON.stringify(userProfileData));
-        setUserProfile(userProfileData);
-        localStorage.setItem("name", userProfileData.name);
+        const userProfileData = response?.data?.[0]; // Añadir verificación segura
+        if (userProfileData) {
+          console.log(JSON.stringify(userProfileData));
+          setUserProfile(userProfileData);
+          localStorage.setItem("name", userProfileData.name);
+        } else {
+          console.error("No user profile data found.");
+        }
       } catch (err) {
         console.error("Error fetching user profile:", err);
       }
