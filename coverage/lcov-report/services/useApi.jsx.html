@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">5.88% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/17</span>
+                <span class='fraction'>17/17</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>3/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">5.88% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/17</span>
+                <span class='fraction'>17/17</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -112,20 +112,20 @@
 <a name='L47'></a><a href='#L47'>47</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -134,19 +134,19 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -158,41 +158,41 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useState, useCallback } from "react";
 import axios from "axios";
 &nbsp;
-const useApi = <span class="fstat-no" title="function not covered" >({</span> apiEndpoint, method = <span class="branch-0 cbranch-no" title="branch not covered" >"GET" </span>}) =&gt; {
-  const [data, setData] = <span class="cstat-no" title="statement not covered" >useState(null);</span>
-  const [loading, setLoading] = <span class="cstat-no" title="statement not covered" >useState(false);</span>
-  const [error, setError] = <span class="cstat-no" title="statement not covered" >useState(null);</span>
+const useApi = ({ apiEndpoint, method = <span class="branch-0 cbranch-no" title="branch not covered" >"GET" </span>}) =&gt; {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 &nbsp;
-  const request = <span class="cstat-no" title="statement not covered" >useCallback(</span>
-<span class="fstat-no" title="function not covered" >    as</span>ync (body = <span class="branch-0 cbranch-no" title="branch not covered" >null)</span> =&gt; {
-<span class="cstat-no" title="statement not covered" >      setLoading(true);</span>
-<span class="cstat-no" title="statement not covered" >      setError(null);</span>
+  const request = useCallback(
+    async (body = null) =&gt; {
+      setLoading(true);
+      setError(null);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      try {</span>
-        const token = <span class="cstat-no" title="statement not covered" >localStorage.getItem("token");</span>
+      try {
+        const token = localStorage.getItem("token");
 &nbsp;
-        const response = <span class="cstat-no" title="statement not covered" >await axios({</span>
+        const response = await axios({
           url: apiEndpoint,
           method,
           data: body,
           headers: {
-            Authorization: token ? `Token ${token}` : "",
+            Authorization: token ? <span class="branch-0 cbranch-no" title="branch not covered" >`Token ${token}` </span>: "",
           },
         });
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        setData(response.data);</span>
-<span class="cstat-no" title="statement not covered" >        setLoading(false);</span>
-<span class="cstat-no" title="statement not covered" >        return response;</span>
+        setData(response.data);
+        setLoading(false);
+        return response;
       } catch (err) {
-<span class="cstat-no" title="statement not covered" >        setError(err.response ? err.response.data : err.message);</span>
-<span class="cstat-no" title="statement not covered" >        setLoading(false);</span>
-<span class="cstat-no" title="statement not covered" >        throw err;</span>
+        setError(err.response ? <span class="branch-0 cbranch-no" title="branch not covered" >err.response.data </span>: err.message);
+        setLoading(false);
+        throw err;
       }
     },
     [apiEndpoint, method]
   );
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return {</span>
+  return {
     data,
     loading,
     error,
@@ -208,7 +208,7 @@ export default useApi;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-09-11T10:35:36.118Z
+                at 2024-09-11T15:34:19.939Z
             </div>
         <script src="../prettify.js"></script>
         <script>

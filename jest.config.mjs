@@ -173,14 +173,6 @@ const config = {
 
   // This option allows use of a custom test runner
   // testRunner: "jest-circus/runner",
-  collectCoverage: true,
-  collectCoverageFrom: [
-    "src/**/*.{js,jsx}",
-    "!src/**/*.test.{js,jsx}",
-    "!src/serviceWorker.js",
-  ],
-  coverageDirectory: "coverage",
-  coverageReporters: ["html", "text"],
 
   // A map from regular expressions to paths to transformers
   // transform: undefined,
@@ -190,7 +182,14 @@ const config = {
   //   "/node_modules/",
   //   "\\.pnp\\.[^\\/]+$"
   // ],
-
+  collectCoverage: true,
+  collectCoverageFrom: [
+    "src/**/*.{js,jsx}",
+    "!src/**/*.test.{js,jsx}",
+    "!src/serviceWorker.js",
+  ],
+  coverageDirectory: "coverage",
+  coverageReporters: ["html", "text"],
   // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
   // unmockedModulePathPatterns: undefined,
 

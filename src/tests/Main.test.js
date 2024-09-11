@@ -3,7 +3,7 @@ import React from "react";
 import { RouterProvider } from "react-router-dom";
 import { render, screen } from "@testing-library/react";
 import { router } from "../router/router";
-import "@testing-library/jest-dom"; // Extiende las expectativas de Jest con @testing-library
+import "@testing-library/jest-dom";
 
 const feature = loadFeature(__dirname + "/Main.feature");
 
@@ -21,7 +21,6 @@ defineFeature(feature, (test) => {
     });
 
     then("the router should be provided", () => {
-      // Buscar el <main> que ya existe en el Layout
       expect(screen.getByRole("main")).toBeInTheDocument();
     });
   });
