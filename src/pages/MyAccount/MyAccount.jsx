@@ -5,10 +5,13 @@ import Button from "../../components/Button/Button";
 import { useNavigate } from "react-router-dom";
 import useApi from "../../services/useApi";
 import { userProfileEndpoint } from "../../config/urls";
+import Logout from "../../components/LogOut/Logout";
 
 const MyAccount = () => {
   const navigate = useNavigate();
   const [userProfile, setUserProfile] = useState(null);
+  const [showLogout, setShowLogout] = useState(false);
+  const [logoutMessage, setLogoutMessage] = useState("");
   const { request, data, error, loading } = useApi({
     apiEndpoint: userProfileEndpoint,
     method: "GET",
@@ -18,7 +21,7 @@ const MyAccount = () => {
     const fetchUserProfile = async () => {
       try {
         const response = await request();
-        const userProfileData = response?.data?.[0]; // Añadir verificación segura
+        const userProfileData = response?.data?.[0];
         if (userProfileData) {
           console.log(JSON.stringify(userProfileData));
           setUserProfile(userProfileData);
@@ -44,6 +47,19 @@ const MyAccount = () => {
 
   const handleEditPreferences = () => {
     navigate("/editPreferences");
+  };
+  const handleLogoutClick = () => {
+    setShowLogout(true);
+  };
+  const handleLogoutSuccess = () => {
+    console.log("Sesión cerrada exitosamente");
+    navigate("/", {
+      state: { logoutMessage: "Has cerrado sesión exitosamente." },
+    });
+  };
+
+  const handleLogoutError = (errorMessage) => {
+    navigate("/home", { state: { logoutError: errorMessage } });
   };
 
   if (loading) {
@@ -86,11 +102,10 @@ const MyAccount = () => {
               )}
             </>
           ) : (
-            <p>No preferences available</p>
+            <p>No hay preferencias disponibles</p>
           )}
         </Card>
       </div>
-
       <div className="back-button">
         <Button
           text="VOLVER"
@@ -100,6 +115,23 @@ const MyAccount = () => {
           onClick={handleBack}
         />
       </div>
+      <div className="logout-button">
+        <Button
+          text="Cerrar Sesión"
+          backgroundColor="var(--white)"
+          textColor="var(--black)"
+          borderColor="var(--pink)"
+          onClick={handleLogoutClick}
+        />
+      </div>
+
+      {showLogout && (
+        <Logout
+          onLogoutSuccess={handleLogoutSuccess}
+          onLogoutError={handleLogoutError}
+        />
+      )}
+      {logoutMessage && <PopUp message={logoutMessage} onClose={closePopUp} />}
     </div>
   );
 };
