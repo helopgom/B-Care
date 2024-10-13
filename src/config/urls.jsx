@@ -3,3 +3,4 @@ export const userProfileEndpoint = `${BASE_URL}userprofile/`;
 export const USER_UPDATE = `${BASE_URL}userprofile/`;
 export const USER_REGISTER = `${BASE_URL}register/`;
 export const USER_LOGIN = `${BASE_URL}login/`;
+export const USER_LOGOUT = `${BASE_URL}logout/`;

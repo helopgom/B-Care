@@ -7,6 +7,7 @@ import EditPersonalData from "../pages/EditPersonalData/EditPersonalData.jsx";
 import EditPreferences from "../pages/EditPreferences/EditPreferences.jsx";
 import Login from "../components/login/Login.jsx";
 import SignUp from "../components/signUp/signUp/SignUp.jsx";
+import Logout from "../components/LogOut/Logout.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ export const router = createBrowserRouter([
       {
         path: "/editPreferences",
         element: <EditPreferences />,
+      },
+      {
+        path: "/logout",
+        element: <Logout />,
       },
     ],
   },

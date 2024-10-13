@@ -1,8 +1,9 @@
-import { useNavigate, Link } from "react-router-dom";
-import React, { useState } from "react";
+import { useNavigate, useLocation, Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import useApi from "../../services/useApi";
 import { USER_LOGIN } from "../../config/urls";
 import "./login.css";
+import PopUp from "../PopUp/Popup";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -11,11 +12,24 @@ const Login = () => {
   });
 
   const navigate = useNavigate();
+  const location = useLocation();
+
   const { request, loading, error } = useApi({
     apiEndpoint: USER_LOGIN,
     method: "POST",
   });
+  const [logoutMessage, setLogoutMessage] = useState("");
 
+  useEffect(() => {
+    if (location.state?.logoutMessage) {
+      setLogoutMessage(location.state.logoutMessage);
+      navigate(location.pathname, { replace: true, state: {} });
+
+      setTimeout(() => {
+        setLogoutMessage("");
+      }, 5000);
+    }
+  }, [location.state]);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -62,6 +76,10 @@ const Login = () => {
           <h3 className="b-care">B-CARE</h3>
           <p className="text-logo">Enjoyables conversations!</p>
         </div>
+        {logoutMessage && (
+          <PopUp message={logoutMessage} onClose={() => setLogoutMessage("")} />
+        )}
+
         <form className="form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="username" className="label">
