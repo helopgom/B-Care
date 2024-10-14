@@ -146,7 +146,7 @@ const EditPersonalData = () => {
       </div>
       <div className="cancel-button-personal-data">
         <Button
-          text="Cancelar"
+          text="VOLVER"
           backgroundColor="var(--white)"
           textColor="var(--black)"
           borderColor="var(--black)"

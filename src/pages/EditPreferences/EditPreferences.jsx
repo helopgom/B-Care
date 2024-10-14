@@ -207,7 +207,7 @@ const EditPreferences = () => {
 
       <div className="cancel-button">
         <Button
-          text="Cancelar"
+          text="VOLVER"
           backgroundColor="var(--white)"
           textColor="var(--black)"
           borderColor="var(--black)"
